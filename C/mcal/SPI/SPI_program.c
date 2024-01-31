@@ -113,28 +113,27 @@ void SPI_SLAVE_Init()
     SET_BIT(TRISA_REG, TRISA_TRISA5);
     #endif
 }
-void SPI_Write(uint8_t Data)
+void SPI_Write(uint8_t data)
 {
     #if MCU_TYPE == _PIC
     while (GET_BIT(SSPSTAT_REG, SSPSTAT_BF) == 0)
     {
 
     }
-    SSPBUF_REG = Data;
+    SSPBUF_REG = data;
     #endif
 }
 uint8_t SPI_Read()
 {
-    uint8_t Data;
+    uint8_t data;
     #if MCU_TYPE == _PIC
-    if ((GET_BIT(SSPSTAT_REG, SSPSTAT_BF) == 1) && 
+    if ((GET_BIT(SSPSTAT_REG, SSPSTAT_BF) == 1) &&
         (GET_BIT(PIR1_REG, PIR1_SSPIF) == 1))
     {
-        Data = SSPBUF_REG;
+        data = SSPBUF_REG;
         CLR_BIT(SSPSTAT_REG, SSPSTAT_BF);
         CLR_BIT(PIR1_REG, PIR1_SSPIF);
     }
     #endif
-    return Data;
+    return data;
 }
-

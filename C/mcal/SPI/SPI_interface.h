@@ -22,6 +22,6 @@
 
 void SPI_MASTER_Init();
 void SPI_SLAVE_Init();
-void SPI_Write(uint8_t Data);
+void SPI_Write(uint8_t data);
 uint8_t SPI_Read();
 #endif
