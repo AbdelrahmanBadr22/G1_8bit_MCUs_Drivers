@@ -6,7 +6,11 @@ CCFLAGS := -g -Wall -DF_CPU=$(CLK) -mmcu=$(MCU) -gdwarf-2 -DMCU_TYPE=1 -O3 -Werr
 
 TARGET := avr
 
+<<<<<<< HEAD
+DIRS := $(shell find ../../../ -maxdepth 5 -type d | grep -E '\./hal/|\./common|\./mcal/')
+=======
 DIRS := $(shell find ../../../ -maxdepth 5 -type d | grep -E '\./hal/|\./common|\./mcal/|\./utils/')
+>>>>>>> 56315dce2aefa628cdbaf82f6e1e1a905cfe733b
 SRC_PATH := $(foreach dir,$(DIRS),$(dir))
 SOURCES := $(foreach S,$(SRC_PATH),$(wildcard $(S)/*.c))
 SOURCES_COUNT := $(words $(SOURCES))
