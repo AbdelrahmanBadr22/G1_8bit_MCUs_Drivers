@@ -8,6 +8,11 @@
 */
 #define SPI_CLK_MODE            (CLK_4)
 /**
+ * options:         1-ENABLE
+ *                  2-DISABLE
+*/
+#define SPI_SS_MODE             (ENABLE)
+/**
  * options:         1-MODE_1
  *                  2-MODE_2
  *                  3-MODE_3

@@ -63,3 +63,78 @@ void SPI_MASTER_Init()
     CLR_BIT(TRISC_REG, TRISC_TRISC5);//SDO
     #endif
 }
+void SPI_SLAVE_Init()
+{
+    #if MCU_TYPE == _PIC
+    //SS pin control
+    #if SPI_SS_MODE == ENABLE
+    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP0);
+    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP1);
+    SET_BIT(SSPCON1_REG, SSPCON1_SSMP2);
+    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP3);
+    #elif SPI_SS_MODE == DISABLE
+    SET_BIT(SSPCON1_REG, SSPCON1_SSMP0);
+    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP1);
+    SET_BIT(SSPCON1_REG, SSPCON1_SSMP2);
+    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP3);
+    #endif
+
+    //Synchronous Serial Port Enable bit
+    SET_BIT(SSPCON1_REG, SSPCON1_SSPEN);
+
+    //SPI BUS MODES
+    #if SPI_MODE == MODE_1
+    CLR_BIT(SSPCON1_REG, SSPCON1_CKP);
+    SET_BIT(SSPSTAT_REG, SSPSTAT_CKE);
+    #elif SPI_MODE == MODE_2
+    CLR_BIT(SSPCON1_REG, SSPCON1_CKP);
+    CLR_BIT(SSPSTAT_REG, SSPSTAT_CKE);
+    #elif SPI_MODE == MODE_3
+    SET_BIT(SSPCON1_REG, SSPCON1_CKP);
+    SET_BIT(SSPSTAT_REG, SSPSTAT_CKE);
+    #elif SPI_MODE == MODE_4
+    SET_BIT(SSPCON1_REG, SSPCON1_CKP);
+    CLR_BIT(SSPSTAT_REG, SSPSTAT_CKE);
+    #endif
+
+    //Sample mode
+    #if SAMPLE_MODE == END
+    SET_BIT(SSPSTAT_REG, SSPSTAT_SMP);
+    #elif SAMPLE_MODE == MIDDLE
+    CLR_BIT(SSPSTAT_REG, SSPSTAT_SMP);
+    #endif
+
+    //Configure The I/O Pins For SPI SLAVE Mode
+    SET_BIT(TRISC_REG, TRISC_TRISC3);//SCK
+    SET_BIT(TRISC_REG, TRISC_TRISC4);//SDI
+    CLR_BIT(TRISC_REG, TRISC_TRISC5);//SDO
+
+    //SS -> INPUT
+    SET_BIT(TRISA_REG, TRISA_TRISA5);
+    #endif
+}
+void SPI_Write(uint8_t Data)
+{
+    #if MCU_TYPE == _PIC
+    while (GET_BIT(SSPSTAT_REG, SSPSTAT_BF) == 0)
+    {
+
+    }
+    SSPBUF_REG = Data;
+    #endif
+}
+uint8_t SPI_Read()
+{
+    uint8_t Data;
+    #if MCU_TYPE == _PIC
+    if ((GET_BIT(SSPSTAT_REG, SSPSTAT_BF) == 1) && 
+        (GET_BIT(PIR1_REG, PIR1_SSPIF) == 1))
+    {
+        Data = SSPBUF_REG;
+        CLR_BIT(SSPSTAT_REG, SSPSTAT_BF);
+        CLR_BIT(PIR1_REG, PIR1_SSPIF);
+    }
+    #endif
+    return Data;
+}
+

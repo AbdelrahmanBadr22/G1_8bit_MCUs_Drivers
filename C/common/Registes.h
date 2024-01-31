@@ -50,6 +50,7 @@
 
 
 #elif MCU_TYPE == _PIC
+    #define PIR1_REG       *((volatile uint8_t *)0xF9E)
     #define TRISA_REG      *((volatile uint8_t *)0xF92)
     #define TRISB_REG      *((volatile uint8_t *)0xF93)
     #define TRISC_REG      *((volatile uint8_t *)0xF94)

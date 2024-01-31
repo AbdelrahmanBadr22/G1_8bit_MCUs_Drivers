@@ -13,4 +13,7 @@
 
 #define END             (0)
 #define MIDDLE          (1)
+
+#define ENABLE          (0)
+#define DISABLE         (1)
 #endif
