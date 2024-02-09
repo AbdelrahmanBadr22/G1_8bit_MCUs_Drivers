@@ -54,6 +54,11 @@
     #define UBRRL_REG   *((volatile uint8_t *)0X29)
     #define UBRRH_REG   *((volatile uint8_t *)0X40)
     #define UDR_REG     *((volatile uint8_t *)0X2C)
+
+    #define SPDR        *((volatile uint8_t *)0X2F)/* SPI Data Register */
+    #define SPCR        *((volatile uint8_t *)0X2D)/* SPI Control Register */
+    #define SPSR        *((volatile uint8_t *)0X2E)/* SPI Status Register */
+
     #define TWCR       *((volatile uint8_t *)0x56) /* TWI Control Register */
     #define TWDR       *((volatile uint8_t *)0x23) /* TWI Data Register */
     #define TWAR       *((volatile uint8_t *)0x22) /* TWI Address Register */

@@ -8,7 +8,39 @@
 
 void SPI_MASTER_Init()
 {
-    #if MCU_TYPE == _PIC
+    #if MCU_TYPE == _AVR
+    SET_BIT(SPCR, SPCR_MSTR);
+    //DATA ORDER
+    #if SPI_DATA_ORDER == MSB_FIRST
+        CLR_BIT(SPCR, SPCR_DORD);
+    #elif SPI_DATA_ORDER == LSB_FIRST
+        SET_BIT(SPCR, SPCR_DORD);
+    #endif
+    //CLOCK POLARITY
+     #if SPI_CLK_POLARITY== IDLE_LOW
+        CLR_BIT(SPCR, SPCR_CPOL);
+    #elif SPI_CLK_POLARITY == IDLE_HIGH
+        SET_BIT(SPCR, SPCR_CPOL);
+    #endif
+    //CLOCK PHASE
+     #if SPI_CLK_PHASE== SAMPLE_FIRST
+        CLR_BIT(SPCR, SPCR_CPHA);
+    #elif SPI_CLK_PHASE == SETUP_FIRST
+        SET_BIT(SPCR, SPCR_CPHA);
+    #endif
+    //CLK FOR MASTER 128
+    SET_BIT(SPCR, SPCR_SPR0);
+    SET_BIT(SPCR, SPCR_SPR1);
+    CLR_BIT(SPSR, SPSR_SPI2X);
+    //SPI ENABLE
+    SET_BIT(SPCR, SPCR_SPE);
+    //INTERRUBT
+     #if SPI_INTERRUBT== INTERRUBT_ENABLE
+        SET_BIT(SPCR, SPCR_SPIE);
+    #elif SPI_INTERRUBT== INTERRUBT_DISABLE
+        CLR_BIT(SPCR, SPCR_SPIE);
+    #endif
+    #elif MCU_TYPE == _PIC
     //Set SCK Rate To Fosc/4
     #if SPI_CLK_MODE == CLK_4
     CLR_BIT(SSPCON1_REG, SSPCON1_SSMP0);
@@ -65,7 +97,32 @@ void SPI_MASTER_Init()
 }
 void SPI_SLAVE_Init()
 {
-    #if MCU_TYPE == _PIC
+    #if MCU_TYPE == _AVR
+    CLR_BIT(SPCR, SPCR_MSTR);
+    #if SPI_DATA_ORDER == MSB_FIRST
+        CLR_BIT(SPCR, SPCR_DORD);
+    #elif SPI_DATA_ORDER == LSB_FIRST
+        SET_BIT(SPCR, SPCR_DORD);
+    #endif
+     #if SPI_CLK_POLARITY == IDLE_LOW
+         CLR_BIT(SPCR, SPCR_CPOL);
+    #elif SPI_CLK_POLARITY == IDLE_HIGH
+         SET_BIT(SPCR, SPCR_CPOL);
+    #endif
+     #if SPI_CLK_PHASE == SAMPLE_FIRST
+         CLR_BIT(SPCR, SPCR_CPHA);
+    #elif SPI_CLK_PHASE == SETUP_FIRST
+          SET_BIT(SPCR, SPCR_CPHA);
+    #endif
+     //SPI ENABLE
+    SET_BIT(SPCR, SPCR_SPE);
+    //INTERRUBT
+     #if SPI_INTERRUBT== INTERRUBT_ENABLE
+        SET_BIT(SPCR, SPCR_SPIE);
+    #elif SPI_INTERRUBT== INTERRUBT_DISABLE
+        CLR_BIT(SPCR, SPCR_SPIE);
+    #endif
+    #elif MCU_TYPE == _PIC
     //SS pin control
     #if SPI_SS_MODE == ENABLE
     CLR_BIT(SSPCON1_REG, SSPCON1_SSMP0);
@@ -113,28 +170,39 @@ void SPI_SLAVE_Init()
     SET_BIT(TRISA_REG, TRISA_TRISA5);
     #endif
 }
-void SPI_Write(uint8_t Data)
+void SPI_Write(uint8_t data)
 {
-    #if MCU_TYPE == _PIC
+    #if MCU_TYPE == _AVR
+    SPDR=data;
+    while (GET_BIT(SPSR, SPSR_SPIF)==0)
+    {
+
+    }
+    #elif MCU_TYPE == _PIC
     while (GET_BIT(SSPSTAT_REG, SSPSTAT_BF) == 0)
     {
 
     }
-    SSPBUF_REG = Data;
+    SSPBUF_REG = data;
     #endif
 }
 uint8_t SPI_Read()
 {
-    uint8_t Data;
-    #if MCU_TYPE == _PIC
-    if ((GET_BIT(SSPSTAT_REG, SSPSTAT_BF) == 1) && 
+    uint8_t data;
+    #if MCU_TYPE == _AVR
+    while (GET_BIT(SPSR, SPSR_SPIF)==0)
+    {
+
+    }
+    data=SPDR;
+    #elif MCU_TYPE == _PIC
+    if ((GET_BIT(SSPSTAT_REG, SSPSTAT_BF) == 1) &&
         (GET_BIT(PIR1_REG, PIR1_SSPIF) == 1))
     {
-        Data = SSPBUF_REG;
+        data = SSPBUF_REG;
         CLR_BIT(SSPSTAT_REG, SSPSTAT_BF);
         CLR_BIT(PIR1_REG, PIR1_SSPIF);
     }
     #endif
-    return Data;
+    return data;
 }
-

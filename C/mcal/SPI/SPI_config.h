@@ -1,6 +1,26 @@
 #ifndef SPI_CONF_H
 #define SPI_CONF_H
 /**
+ * options:         1-MSB_FIRST
+ *                  2-LSB_FIRST
+*/
+#define SPI_DATA_ORDER         (MSB_FIRST)
+/**
+ * options:         1-IDLE_LOW
+ *                  2-IDLE_HIGH
+*/
+#define SPI_CLK_POLARITY         (IDLE_LOW)
+/**
+ * options:         1-SAMPLE_FIRST
+ *                  2-SETUP_FIRST
+*/
+#define SPI_CLK_PHASE         (SAMPLE_FIRST)
+/**
+ * options:         1-INTERRUBT_ENABLE
+ *                  2-INTERRUBT_DISABLE
+*/
+#define SPI_INTERRUBT         (INTERRUBT_DISABLE)
+/**
  * options:         1-CLK_4
  *                  2-CLK_16
  *                  3-CLK_64
