@@ -7,7 +7,8 @@
 #include "../../mcal/EXTI/EXTI_Interface.h"
 #include "ultrasonic.h"
 
-error_t UltrasonicInit(Ultrasonic_t* pUS, uint8_t kMode, uint8_t kClock, uint8_t kInterruptSource)
+error_t UltrasonicInit(Ultrasonic_t* pUS, uint8_t kMode,
+                        uint8_t kClock, uint8_t kInterruptSource)
 {
     error_t retErrorState = kNoError;
     if (pUS != NULL)
