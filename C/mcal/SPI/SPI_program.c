@@ -70,6 +70,8 @@ void SPI_MASTER_Init()
     CLR_BIT(TRISC_REG, TRISC_TRISC3);//SCK
     SET_BIT(TRISC_REG, TRISC_TRISC4);//SDI
     CLR_BIT(TRISC_REG, TRISC_TRISC5);//SDO
+    #else
+      #error "Unkown MCU"
     #endif
 }
 void SPI_SLAVE_Init()
@@ -125,6 +127,8 @@ void SPI_SLAVE_Init()
 
     //SS -> INPUT
     SET_BIT(TRISA_REG, TRISA_TRISA5);
+    #else
+      #error "Unkown MCU"
     #endif
 }
 error_t SPI_Write(uint8_t data)
@@ -173,11 +177,14 @@ error_t SPI_Read(uint8_t* data)
         CLR_BIT(SSPSTAT_REG, SSPSTAT_BF);
         CLR_BIT(PIR1_REG, PIR1_SSPIF);
     }
+    #else
+      #error "Unkown MCU"
     #endif
     return kErrorState;
 }
 void AVR_Config_Helper()
 {
+    #if MCU_TYPE == _AVR
     //DATA ORDER
     #if SPI_DATA_ORDER == MSB_FIRST
         CLR_BIT(SPCR, SPCR_DORD);
@@ -211,5 +218,6 @@ void AVR_Config_Helper()
         CLR_BIT(SPCR, SPCR_SPIE);
     #else
         #error "wrong SPI_INTERRUBT_config"
+    #endif
     #endif
 }
