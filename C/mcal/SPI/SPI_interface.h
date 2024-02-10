@@ -34,6 +34,6 @@
 
 void SPI_MASTER_Init();
 void SPI_SLAVE_Init();
-void SPI_Write(uint8_t data);
-uint8_t SPI_Read();
+error_t SPI_Write(uint8_t data);
+error_t SPI_Read(uint8_t* data);
 #endif

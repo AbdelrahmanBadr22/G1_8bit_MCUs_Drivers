@@ -9,37 +9,14 @@
 void SPI_MASTER_Init()
 {
     #if MCU_TYPE == _AVR
-    SET_BIT(SPCR, SPCR_MSTR);
-    //DATA ORDER
-    #if SPI_DATA_ORDER == MSB_FIRST
-        CLR_BIT(SPCR, SPCR_DORD);
-    #elif SPI_DATA_ORDER == LSB_FIRST
-        SET_BIT(SPCR, SPCR_DORD);
-    #endif
-    //CLOCK POLARITY
-     #if SPI_CLK_POLARITY== IDLE_LOW
-        CLR_BIT(SPCR, SPCR_CPOL);
-    #elif SPI_CLK_POLARITY == IDLE_HIGH
-        SET_BIT(SPCR, SPCR_CPOL);
-    #endif
-    //CLOCK PHASE
-     #if SPI_CLK_PHASE== SAMPLE_FIRST
-        CLR_BIT(SPCR, SPCR_CPHA);
-    #elif SPI_CLK_PHASE == SETUP_FIRST
-        SET_BIT(SPCR, SPCR_CPHA);
-    #endif
-    //CLK FOR MASTER 128
-    SET_BIT(SPCR, SPCR_SPR0);
-    SET_BIT(SPCR, SPCR_SPR1);
-    CLR_BIT(SPSR, SPSR_SPI2X);
-    //SPI ENABLE
-    SET_BIT(SPCR, SPCR_SPE);
-    //INTERRUBT
-     #if SPI_INTERRUBT== INTERRUBT_ENABLE
-        SET_BIT(SPCR, SPCR_SPIE);
-    #elif SPI_INTERRUBT== INTERRUBT_DISABLE
-        CLR_BIT(SPCR, SPCR_SPIE);
-    #endif
+        //initalize it as master
+        SET_BIT(SPCR, SPCR_MSTR);
+        //set configuration
+        void Config_Helper();
+        //CLK FOR MASTER 128
+        SET_BIT(SPCR, SPCR_SPR0);
+        SET_BIT(SPCR, SPCR_SPR1);
+        CLR_BIT(SPSR, SPSR_SPI2X);
     #elif MCU_TYPE == _PIC
     //Set SCK Rate To Fosc/4
     #if SPI_CLK_MODE == CLK_4
@@ -98,30 +75,10 @@ void SPI_MASTER_Init()
 void SPI_SLAVE_Init()
 {
     #if MCU_TYPE == _AVR
-    CLR_BIT(SPCR, SPCR_MSTR);
-    #if SPI_DATA_ORDER == MSB_FIRST
-        CLR_BIT(SPCR, SPCR_DORD);
-    #elif SPI_DATA_ORDER == LSB_FIRST
-        SET_BIT(SPCR, SPCR_DORD);
-    #endif
-     #if SPI_CLK_POLARITY == IDLE_LOW
-         CLR_BIT(SPCR, SPCR_CPOL);
-    #elif SPI_CLK_POLARITY == IDLE_HIGH
-         SET_BIT(SPCR, SPCR_CPOL);
-    #endif
-     #if SPI_CLK_PHASE == SAMPLE_FIRST
-         CLR_BIT(SPCR, SPCR_CPHA);
-    #elif SPI_CLK_PHASE == SETUP_FIRST
-          SET_BIT(SPCR, SPCR_CPHA);
-    #endif
-     //SPI ENABLE
-    SET_BIT(SPCR, SPCR_SPE);
-    //INTERRUBT
-     #if SPI_INTERRUBT== INTERRUBT_ENABLE
-        SET_BIT(SPCR, SPCR_SPIE);
-    #elif SPI_INTERRUBT== INTERRUBT_DISABLE
-        CLR_BIT(SPCR, SPCR_SPIE);
-    #endif
+        //initalize it as slave
+        CLR_BIT(SPCR, SPCR_MSTR);
+        //set configuration
+        void Config_Helper();
     #elif MCU_TYPE == _PIC
     //SS pin control
     #if SPI_SS_MODE == ENABLE
@@ -170,31 +127,44 @@ void SPI_SLAVE_Init()
     SET_BIT(TRISA_REG, TRISA_TRISA5);
     #endif
 }
-void SPI_Write(uint8_t data)
+error_t SPI_Write(uint8_t data)
 {
+    error_t kErrorState = kNoError;
+    uint8_t counter=0;
     #if MCU_TYPE == _AVR
-    SPDR=data;
-    while (GET_BIT(SPSR, SPSR_SPIF)==0)
-    {
-
-    }
+      #define SPI_WRITE_REG                  (SPDR)
+      #define SPI_GET_TRANSFER_STATUS()      (GET_BIT(SPSR, SPSR_SPIF))
     #elif MCU_TYPE == _PIC
-    while (GET_BIT(SSPSTAT_REG, SSPSTAT_BF) == 0)
-    {
-
-    }
-    SSPBUF_REG = data;
+      #define SPI_WRITE_REG                  (SSPBUF_REG)
+      #define SPI_GET_TRANSFER_STATUS()      (GET_BIT(SSPSTAT_REG, SSPSTAT_BF))
+    #else
+      #error "Unkown MCU"
     #endif
-}
-uint8_t SPI_Read()
-{
-    uint8_t data;
-    #if MCU_TYPE == _AVR
-    while (GET_BIT(SPSR, SPSR_SPIF)==0)
+    SPI_WRITE_REG = data;
+    while ((SPI_GET_TRANSFER_STATUS() == 0) && (counter<SPI_TIMEOUT))
     {
-
+        counter++;
     }
-    data=SPDR;
+    if (counter == SPI_TIMEOUT)
+    {
+        kErrorState=kTimeoutError;
+    }
+    return kErrorState;
+}
+error_t SPI_Read(uint8_t* data)
+{
+    error_t kErrorState = kNoError;
+    #if MCU_TYPE == _AVR
+    uint8_t counter=0;
+    while (GET_BIT(SPSR, SPSR_SPIF)==0&&counter<SPI_TIMEOUT)
+    {
+        counter++;
+    }
+    if (counter == SPI_TIMEOUT)
+    {
+        kErrorState=kTimeoutError;
+    }
+    *data=SPDR;
     #elif MCU_TYPE == _PIC
     if ((GET_BIT(SSPSTAT_REG, SSPSTAT_BF) == 1) &&
         (GET_BIT(PIR1_REG, PIR1_SSPIF) == 1))
@@ -204,5 +174,42 @@ uint8_t SPI_Read()
         CLR_BIT(PIR1_REG, PIR1_SSPIF);
     }
     #endif
-    return data;
+    return kErrorState;
+}
+void AVR_Config_Helper()
+{
+    //DATA ORDER
+    #if SPI_DATA_ORDER == MSB_FIRST
+        CLR_BIT(SPCR, SPCR_DORD);
+    #elif SPI_DATA_ORDER == LSB_FIRST
+        SET_BIT(SPCR, SPCR_DORD);
+    #else
+        #error "wrong SPI_DATA_ORDER_config"
+    #endif
+    //CLOCK POLARITY
+     #if SPI_CLK_POLARITY== IDLE_LOW
+        CLR_BIT(SPCR, SPCR_CPOL);
+    #elif SPI_CLK_POLARITY == IDLE_HIGH
+        SET_BIT(SPCR, SPCR_CPOL);
+    #else
+        #error "wrong SPI_CLOCK_Polarity_config"
+    #endif
+    //CLOCK PHASE
+     #if SPI_CLK_PHASE== SAMPLE_FIRST
+        CLR_BIT(SPCR, SPCR_CPHA);
+    #elif SPI_CLK_PHASE == SETUP_FIRST
+        SET_BIT(SPCR, SPCR_CPHA);
+    #else
+        #error "wrong SPI_CLOCK_PHASE config"
+    #endif
+    //SPI ENABLE
+    SET_BIT(SPCR, SPCR_SPE);
+    //INTERRUBT
+     #if SPI_INTERRUBT== INTERRUBT_ENABLE
+        SET_BIT(SPCR, SPCR_SPIE);
+    #elif SPI_INTERRUBT== INTERRUBT_DISABLE
+        CLR_BIT(SPCR, SPCR_SPIE);
+    #else
+        #error "wrong SPI_INTERRUBT_config"
+    #endif
 }

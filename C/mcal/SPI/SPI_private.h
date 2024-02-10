@@ -29,4 +29,6 @@
 
 #define ENABLE          (0)
 #define DISABLE         (1)
+
+void AVR_Config_Helper();
 #endif

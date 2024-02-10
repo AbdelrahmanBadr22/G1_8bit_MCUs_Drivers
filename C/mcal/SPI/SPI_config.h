@@ -1,5 +1,7 @@
 #ifndef SPI_CONF_H
 #define SPI_CONF_H
+
+#define SPI_TIMEOUT             (1000)
 /**
  * options:         1-MSB_FIRST
  *                  2-LSB_FIRST
