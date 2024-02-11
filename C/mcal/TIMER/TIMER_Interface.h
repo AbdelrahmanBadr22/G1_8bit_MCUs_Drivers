@@ -95,13 +95,13 @@ error_t TIMER0_SetCallBackFun(uint8_t interruptSource,
 
 /**
  * @brief        : This Function is used to Init the Timer1
- * 
+ *
  * @param kMode  : OPTIONS[ TIMER_NORMAL_MODE, TIMER_CTC_MODE, TIMER_PWM_MODE]
  * @param kClock : OPTIONS:
  *                          TIMER0_OFF
  *                          TIMER0_PRESCALER_1
  *                          TIMER0_PRESCALER_8
- *                          TIMER0_PRESCALER_64 
+ *                          TIMER0_PRESCALER_64
  *                          TIMER0_PRESCALER_128
  *                          TIMER0_PRESCALER_1024
  *                          TIMER0_EXTERNAL_CLK_FALLING
@@ -117,45 +117,45 @@ void TIMER1_SetCTCB(uint16 kOCRB_Value);        //IGNORE-STYLE-CHECK[B004]
 
 /**
  * @brief           : This Function is used to Set OCn[A/B] Pin Mode at overflow
- * 
+ *
  * @param OCPinMode : OPTIONS:
  *                              TIMER_OC_TURN_OFF
  *                              TIMER_OC_TOGGLE
  *                              TIMER_OC_CLEAR
  *                              TIMER_OC_SET
- * @return error_t 
+ * @return error_t
  */
 error_t TIMER1_SetOCAPinMode(uint8_t kOCPinMode);
 error_t TIMER1_SetOCBPinMode(uint8_t kOCPinMode);
 
 /**
  * @brief          : This Function is used to Set Channel OC1[A/B] Mode
- * 
+ *
  * @param kChannel : [PWM1_OC1A, PWM1_OC1B]
  * @param kMode    : [PWM1_INVERTING, PWM1_NON_INVERTING]
- * @return error_t 
+ * @return error_t
  */
 error_t TIMER1_SetPWM_Channel_Mode(uint8_t kChannel, uint8_t kMode);
 
 /**
- * @brief            : This Function is used to Set the frequency of PWM at timer1
- * 
- * @param Frequency  : Value of the frequency (Max allowed freq is F_CPU(8000000) )
- * @param Prescaler  : OPTIONS: 
+ * @brief   : This Function is used to Set the frequency of PWM at timer1
+ *
+ * @param frequency :Value of the frequency (Max allowed freq is CPU_FRQ )
+ * @param kPrescaler  : OPTIONS:
  *                              PWM1_PRESCALER_1
  *                              PWM1_PRESCALER_8
  *                              PWM1_PRESCALER_64
  *                              PWM1_PRESCALER_128
  *                              PWM1_PRESCALER_1024
- * @return error_t 
+ * @return error_t
  */
-error_t TIMER1_SetPWM_Freq(uint32_t Frequency, uint32_t Prescaler);
+error_t TIMER1_SetPWM_Freq(uint32_t frequency, uint32_t kPrescaler);
 /**
- * @brief            : This Function is used to Set the frequency of PWM at timer1
- * 
+ * @brief  : This Function is used to Set the frequency of PWM at timer1
+ *
  * @param dutyCycle  : Copy Duty Cycle [0 : 100] allowed values
- * @param kChannel    : [PWM1_OC1A, PWM1_OC1B]
- * @return error_t 
+ * @param kChannel   : [PWM1_OC1A, PWM1_OC1B]
+ * @return error_t
  */
 error_t TIMER1_SetDutyCycle(uint8_t dutyCycle, uint8_t kChannel);
 

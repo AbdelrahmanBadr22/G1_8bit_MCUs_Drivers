@@ -299,7 +299,7 @@ error_t TIMER1_SetPWM_Channel_Mode(uint8_t kChannel, uint8_t kMode)
                 CLR_BIT(TCCR1A, TCCR1A_COM1A0);
                 SET_BIT(TCCR1A, TCCR1A_COM1A1);
                 break;
-            default : kErrorState = kFunctionParameterError;
+            default: kErrorState = kFunctionParameterError;
         }
     }else if ( kChannel == PWM1_OC1B)
     {
@@ -314,7 +314,7 @@ error_t TIMER1_SetPWM_Channel_Mode(uint8_t kChannel, uint8_t kMode)
                 CLR_BIT(TCCR1A, TCCR1A_COM1B0);
                 SET_BIT(TCCR1A, TCCR1A_COM1B1);
                 break;
-            default : kErrorState = kFunctionParameterError;
+            default: kErrorState = kFunctionParameterError;
         }
     }else
     {
@@ -323,7 +323,7 @@ error_t TIMER1_SetPWM_Channel_Mode(uint8_t kChannel, uint8_t kMode)
     #endif
     return kErrorState;
 }
-error_t TIMER1_SetPWM_Freq(uint32_t frequency, uint32_t prescaler)
+error_t TIMER1_SetPWM_Freq(uint32_t frequency, uint32_t kPrescaler)
 {
     error_t kErrorState = kNoError;
     #if MCU_TYPE == _AVR
@@ -333,7 +333,7 @@ error_t TIMER1_SetPWM_Freq(uint32_t frequency, uint32_t prescaler)
              * F_PWM = CPU_FREQ/(Prescaler * (1 + TOP ))
              * TOP = ICR1
              */
-            ICR1 = ( ( CPU_FREQ ) / ( prescaler * frequency ) ) - 1;
+            ICR1 = ( ( CPU_FREQ ) / ( kPrescaler * frequency ) ) - 1;
     }else
     {
         kErrorState = kFunctionParameterError;
@@ -355,11 +355,11 @@ error_t TIMER1_SetDutyCycle(uint8_t dutyCycle, uint8_t kChannel)
         }else if (kChannel == PWM1_OC1B)
         {
             OCR1B = iOCRValue;
-        }else 
+        }else
         {
             kErrorState = kFunctionParameterError;
         }
-    }else 
+    }else
     {
         kErrorState = kFunctionParameterError;
     }
