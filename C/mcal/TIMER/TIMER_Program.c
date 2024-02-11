@@ -8,6 +8,8 @@
 #ifndef MCAL_TIMER_TIMER_PROGRAM_C_
 #define MCAL_TIMER_TIMER_PROGRAM_C_
 
+
+#include "../../common/Config.h"
 #include "../../common/Registes.h"
 #include "../../common/Types.h"
 #include "../../common/Utils.h"

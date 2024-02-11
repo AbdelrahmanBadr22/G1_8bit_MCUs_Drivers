@@ -123,4 +123,14 @@ int main()
     print_str("DDRB_REG: ");
     print_num(DDRB_REG);
     print_str("\n");
+    print_num_binary(0);
+    print_str("\n");
+    print_num_binary(255);
+    print_str("\n");
+    print_num_binary(16);
+    print_str("\n");
+    print_num_binary(256);
+    print_str("\n");
+    print_num_binary(4);
+    print_str("\n");
 }
