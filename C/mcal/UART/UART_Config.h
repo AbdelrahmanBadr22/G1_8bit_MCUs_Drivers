@@ -1,0 +1,7 @@
+#ifndef UART_CONFIG_H_
+#define UART_CONFIG_H_
+
+#define USART_PARITY_MODE  (DISABLE)
+#define USART_DATA_SIZE    (DATA_SIZE_8_BIT)
+
+#endif

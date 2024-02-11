@@ -1,1 +1,1 @@
-# G1_AVR_ATMEGA32_Drivers
+# G1_8bit_MCUs_Drivers

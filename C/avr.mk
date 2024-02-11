@@ -24,7 +24,7 @@ AVRDUDE_MCU = m32
 AVRDUDE_PORT = /dev/ACM0
 
 upload-avr: $(HEX)
-	@$(AVRDUDE) -c $(AVRDUDE_PROGRAMMER) -p $(AVRDUDE_MCU) -P $(AVRDUDE_PORT) -U flash:w:$(TARGET).hex:i
+	@$(AVRDUDE) -c $(AVRDUDE_PROGRAMMER) -p $(AVRDUDE_MCU) -P $(AVRDUDE_PORT) -U flash:w:$(AVR_TARGET).hex:i
 
 $(AVR_OBJDIR)/%.o : **/**/%.c
 	@mkdir -p $(AVR_OBJDIR)

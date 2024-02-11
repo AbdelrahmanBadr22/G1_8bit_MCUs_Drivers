@@ -192,16 +192,16 @@ error_t GPIO_SetPinPullup(port_t portNumber, pin_t pinNumber)
 		switch ( portNumber)
 		{
 			case kPORTA : SET_DIR_INPUT(GPIOA_DIR_REG, pinNumber);
-						  SET_BIT(GPIOA_OUT_REG, kHigh);
+						  SET_BIT(GPIOA_OUT_REG, pinNumber);
 						  break;
 			case kPORTB : SET_DIR_INPUT(GPIOB_DIR_REG, pinNumber);
-						  SET_BIT(GPIOB_OUT_REG, kHigh);
+						  SET_BIT(GPIOB_OUT_REG, pinNumber);
 						  break;
 			case kPORTC : SET_DIR_INPUT(GPIOC_DIR_REG, pinNumber);
-						  SET_BIT(GPIOC_OUT_REG, kHigh);
+						  SET_BIT(GPIOC_OUT_REG, pinNumber);
 						  break;
 			case kPORTD : SET_DIR_INPUT(GPIOD_DIR_REG, pinNumber);
-						  SET_BIT(GPIOD_OUT_REG, kHigh);
+						  SET_BIT(GPIOD_OUT_REG, pinNumber);
 						  break;
 			#if MCU_TYPE == _PIC
 			case kPORTE : SET_DIR_INPUT(GPIOE_DIR_REG, pinNumber);

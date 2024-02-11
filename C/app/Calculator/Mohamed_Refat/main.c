@@ -11,6 +11,7 @@
 #include "../../../common/Types.h"
 #include "../../../common/Utils.h"
 #include "../../../common/Config.h"
+#include "../../mcal/GPIO/GPIO.h"
 #include "../../../hal/LCD/LCD_Interface.h"
 #include "../../../hal/Keypad/Keypad_config_only_one.h"
 #include "../../../hal/Keypad/Keypad_only_one.h"

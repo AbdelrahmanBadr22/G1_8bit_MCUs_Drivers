@@ -12,7 +12,8 @@ uint8_t keypadButtons[Keypad_numberOfRows]
                      [Keypad_numberOfCols] = {{'7', '8', '9', '/'},
                                               {'4', '5', '6', '*'},
                                               {'1', '2', '3', '-'},
-                                              {'&', '0', '=', '+'}
+                                              {'C', '0', '=', '+'}
+
                                              };
 error_t Keypad_Init(keypad_t * pKeypad)
 {
@@ -25,7 +26,9 @@ error_t Keypad_Init(keypad_t * pKeypad)
         for (i = 0; i < Keypad_numberOfRows; i++)
         {
             GPIO_SetPinDirection(pKeypad->Keypad_RowArr[i].port,
-                              pKeypad->Keypad_RowArr[i].pin, kInput);
+                              pKeypad->Keypad_RowArr[i].pin,
+                              kInput);
+
             GPIO_SetPinValue(pKeypad->Keypad_RowArr[i].port,
                              pKeypad->Keypad_RowArr[i].pin,
                              kHigh);

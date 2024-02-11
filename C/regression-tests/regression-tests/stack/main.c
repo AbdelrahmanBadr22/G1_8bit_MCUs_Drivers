@@ -47,6 +47,12 @@ int main()
     print_str("\nsize: ");
     print_num(charStack_GetSize(&cS)); // Expected 0
 
+    charStack_Push(&cS, 'm');
+    print_str("\nsize: ");
+    print_num(charStack_GetSize(&cS)); // Expected 1
+    print_str("\ntop-val: ");
+    print_char(charStack_GetTop(&cS));  // Expected 'm'
+
     print_str("\n");
 
     // ------------- INT STACK

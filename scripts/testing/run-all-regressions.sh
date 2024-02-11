@@ -4,6 +4,8 @@ EXIT=0
 main_C_test_directory=regression-tests/regression-tests
 
 if [ -d "$main_C_test_directory" ]; then
+  # Make sure no summary file found from previous run 
+  rm -rf "$main_C_test_directory"/summary
   test_files_dirs=$(ls "$main_C_test_directory")
 else
   echo "Directory not found: $main_C_test_directory"

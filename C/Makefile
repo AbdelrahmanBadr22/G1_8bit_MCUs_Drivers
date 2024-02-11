@@ -63,8 +63,19 @@ build-avr-opt:$(AVR_OBJS)
 # make build-app path=path/to/app
 # TODO(@Mariamahmed44): #97 Implement this rule
 # ------------------------------------------
-build-app:
-	@echo "NOT IMPLEMENTED"
+build-app: $(AVR_OBJS) $(AVR_OBJDIR)
+ifndef path 
+	$(error "enter your path")
+	
+endif
+ifeq ($(findstring app/, $(path)), app/)
+	
+		@$(AVR_GCC) $(AVR_GCCFLAGS) $(AVR_OBJS) $(wildcard $(path)/*.c) $(INC) -o $(path)/$(AVR_ELF_TARGET)
+		@$(AVR_OBJ_COPY) $(AVR_OBJ_COPY_OPTS) $(path)/$(AVR_ELF_TARGET) $(path)/$(AVR_HEX_TARGET)
+		@echo "\n[Makefile][build-app] : Compiled successfully."
+else
+	$(error "enter a valid path")
+endif
 
 # --------------------------------------------------------
 # Rule to compile test 
@@ -123,6 +134,8 @@ clean:
 	@rm -rf *.hex
 	@rm -rf avr
 	@rm -rf .build
+	@find app/* -name "*.hex" -type f -delete
+	@find app/* -name "*.elf" -type f -delete
 
 # ----------------------------------------------------
 # Rule to display help message

@@ -9,6 +9,8 @@ top-val: b
 size: 1
 top-val: a
 size: 0
+size: 1
+top-val: m
 
 INT Stack:
 sizeof stack member:4

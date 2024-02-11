@@ -137,6 +137,24 @@
                                     }\
                                     return STACK_FAILURE;\
                                 }
-
+/**
+ * @brief Generic macro which is used to define stack_clear
+ *        with a certain type.
+ *
+ * @note
+ *
+ *
+ */
+#define DEC_Stack_Clear(type_)   type_ type_##Stack_Clear(type_##Stack_t* S);
+#define Stack_Clear(type_)       type_ type_##Stack_Clear(type_##Stack_t* S)\
+                                {\
+                                    if (S != NULL)\
+                                    {\
+                                        S->top=0;\
+                                        S->size=0;\
+                                        return STACK_SUCCESS;\
+                                    }\
+                                    return STACK_FAILURE;\
+                                }
 
 #endif /*STACK_MACROS_H_*/
