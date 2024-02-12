@@ -32,4 +32,5 @@
 
 void AVR_Config_Helper();
 void PIC_Config_Helper();
+void PIC_CLK_MODE();
 #endif

@@ -18,36 +18,16 @@ void SPI_MASTER_Init()
         SET_BIT(SPCR, SPCR_SPR1);
         CLR_BIT(SPSR, SPSR_SPI2X);
     #elif MCU_TYPE == _PIC
-    //Set SCK Rate To Fosc/4
-    #if SPI_CLK_MODE == CLK_4
-    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP0);
-    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP1);
-    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP2);
-    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP3);
-    #elif SPI_CLK_MODE == CLK_16
-    SET_BIT(SSPCON1_REG, SSPCON1_SSMP0);
-    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP1);
-    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP2);
-    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP3);
-    #elif SPI_CLK_MODE == CLK_64
-    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP0);
-    SET_BIT(SSPCON1_REG, SSPCON1_SSMP1);
-    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP2);
-    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP3);
-    #elif SPI_CLK_MODE == TMR2_OUTPUT_2
-    SET_BIT(SSPCON1_REG, SSPCON1_SSMP0);
-    SET_BIT(SSPCON1_REG, SSPCON1_SSMP1);
-    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP2);
-    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP3);
-    #endif
-    //set configuration
-    PIC_Config_Helper();
-    //Configure The I/O Pins For SPI Master Mode
-    CLR_BIT(TRISC_REG, TRISC_TRISC3);//SCK
-    SET_BIT(TRISC_REG, TRISC_TRISC4);//SDI
-    CLR_BIT(TRISC_REG, TRISC_TRISC5);//SDO
+        //set SPI CLK MODE
+        PIC_CLK_MODE();
+        //set configuration
+        PIC_Config_Helper();
+        //Configure The I/O Pins For SPI Master Mode
+        CLR_BIT(TRISC_REG, TRISC_TRISC3);//SCK
+        SET_BIT(TRISC_REG, TRISC_TRISC4);//SDI
+        CLR_BIT(TRISC_REG, TRISC_TRISC5);//SDO
     #else
-      #error "Unkown MCU"
+        #error "Unkown MCU"
     #endif
 }
 void SPI_SLAVE_Init()
@@ -58,25 +38,24 @@ void SPI_SLAVE_Init()
         //set configuration
         AVR_Config_Helper();
     #elif MCU_TYPE == _PIC
-    //SS pin control
-    #if SPI_SS_MODE == ENABLE
-    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP0);
-    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP1);
-    SET_BIT(SSPCON1_REG, SSPCON1_SSMP2);
-    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP3);
-    #elif SPI_SS_MODE == DISABLE
-    SET_BIT(SSPCON1_REG, SSPCON1_SSMP0);
-    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP1);
-    SET_BIT(SSPCON1_REG, SSPCON1_SSMP2);
-    CLR_BIT(SSPCON1_REG, SSPCON1_SSMP3);
-    #endif
-    //set configuration
-    PIC_Config_Helper();
-    //Configure The I/O Pins For SPI SLAVE Mode
-    SET_BIT(TRISC_REG, TRISC_TRISC3);//SCK
-    SET_BIT(TRISC_REG, TRISC_TRISC4);//SDI
-    CLR_BIT(TRISC_REG, TRISC_TRISC5);//SDO
-
+        //SS pin control
+      #if SPI_SS_MODE == ENABLE
+        CLR_BIT(SSPCON1_REG, SSPCON1_SSMP0);
+        CLR_BIT(SSPCON1_REG, SSPCON1_SSMP1);
+        SET_BIT(SSPCON1_REG, SSPCON1_SSMP2);
+        CLR_BIT(SSPCON1_REG, SSPCON1_SSMP3);
+        #elif SPI_SS_MODE == DISABLE
+        SET_BIT(SSPCON1_REG, SSPCON1_SSMP0);
+        CLR_BIT(SSPCON1_REG, SSPCON1_SSMP1);
+        SET_BIT(SSPCON1_REG, SSPCON1_SSMP2);
+        CLR_BIT(SSPCON1_REG, SSPCON1_SSMP3);
+      #endif
+      //set configuration
+      PIC_Config_Helper();
+      //Configure The I/O Pins For SPI SLAVE Mode
+      SET_BIT(TRISC_REG, TRISC_TRISC3);//SCK
+      SET_BIT(TRISC_REG, TRISC_TRISC4);//SDI
+      CLR_BIT(TRISC_REG, TRISC_TRISC5);//SDO
     //SS -> INPUT
     SET_BIT(TRISA_REG, TRISA_TRISA5);
     #else
@@ -152,7 +131,7 @@ void AVR_Config_Helper()
         #error "wrong SPI_DATA_ORDER_config"
     #endif
     //CLOCK POLARITY
-     #if SPI_CLK_POLARITY== IDLE_LOW
+    #if SPI_CLK_POLARITY== IDLE_LOW
         CLR_BIT(SPCR, SPCR_CPOL);
     #elif SPI_CLK_POLARITY == IDLE_HIGH
         SET_BIT(SPCR, SPCR_CPOL);
@@ -170,7 +149,7 @@ void AVR_Config_Helper()
     //SPI ENABLE
     SET_BIT(SPCR, SPCR_SPE);
     //INTERRUBT
-     #if SPI_INTERRUBT== INTERRUBT_ENABLE
+    #if SPI_INTERRUBT== INTERRUBT_ENABLE
         SET_BIT(SPCR, SPCR_SPIE);
     #elif SPI_INTERRUBT== INTERRUBT_DISABLE
         CLR_BIT(SPCR, SPCR_SPIE);
@@ -185,7 +164,7 @@ void PIC_Config_Helper()
     //Synchronous Serial Port Enable bit
     SET_BIT(SSPCON1_REG, SSPCON1_SSPEN);
     //SPI BUS MODES
-    #if SPI_MODE == MODE_1
+    #if SPI_MODE == MODE_1s
     CLR_BIT(SSPCON1_REG, SSPCON1_CKP);
     SET_BIT(SSPSTAT_REG, SSPSTAT_CKE);
     #elif SPI_MODE == MODE_2
@@ -208,5 +187,32 @@ void PIC_Config_Helper()
     #else
         #error "wrong SPI Sample mode Config"
     #endif
+    #endif
+}
+void PIC_CLK_MODE()
+{
+    #if MCU_TYPE == _PIC
+        //Set SCK Rate To Fosc/4
+        #if SPI_CLK_MODE == CLK_4
+        CLR_BIT(SSPCON1_REG, SSPCON1_SSMP0);
+        CLR_BIT(SSPCON1_REG, SSPCON1_SSMP1);
+        CLR_BIT(SSPCON1_REG, SSPCON1_SSMP2);
+        CLR_BIT(SSPCON1_REG, SSPCON1_SSMP3);
+        #elif SPI_CLK_MODE == CLK_16
+        SET_BIT(SSPCON1_REG, SSPCON1_SSMP0);
+        CLR_BIT(SSPCON1_REG, SSPCON1_SSMP1);
+        CLR_BIT(SSPCON1_REG, SSPCON1_SSMP2);
+        CLR_BIT(SSPCON1_REG, SSPCON1_SSMP3);
+        #elif SPI_CLK_MODE == CLK_64
+        CLR_BIT(SSPCON1_REG, SSPCON1_SSMP0);
+        SET_BIT(SSPCON1_REG, SSPCON1_SSMP1);
+        CLR_BIT(SSPCON1_REG, SSPCON1_SSMP2);
+        CLR_BIT(SSPCON1_REG, SSPCON1_SSMP3);
+        #elif SPI_CLK_MODE == TMR2_OUTPUT_2
+        SET_BIT(SSPCON1_REG, SSPCON1_SSMP0);
+        SET_BIT(SSPCON1_REG, SSPCON1_SSMP1);
+        CLR_BIT(SSPCON1_REG, SSPCON1_SSMP2);
+        CLR_BIT(SSPCON1_REG, SSPCON1_SSMP3);
+        #endif
     #endif
 }
