@@ -73,6 +73,11 @@
     #define UBRRL_REG   *((volatile uint8_t *)0X29)
     #define UBRRH_REG   *((volatile uint8_t *)0X40)
     #define UDR_REG     *((volatile uint8_t *)0X2C)
+
+    #define SPDR        *((volatile uint8_t *)0X2F)/* SPI Data Register */
+    #define SPCR        *((volatile uint8_t *)0X2D)/* SPI Control Register */
+    #define SPSR        *((volatile uint8_t *)0X2E)/* SPI Status Register */
+
     #define TWCR       *((volatile uint8_t *)0x56) /* TWI Control Register */
     #define TWDR       *((volatile uint8_t *)0x23) /* TWI Data Register */
     #define TWAR       *((volatile uint8_t *)0x22) /* TWI Address Register */
@@ -131,6 +136,9 @@
     #define TRISC_REG   *((volatile uint8_t *)0xF94)
     #define PIR1_REG    *((volatile uint8_t *)0xF9E)
     #define BAUDCTL_REG *((volatile uint8_t *)0xFB8)
+    #define SSPSTAT_REG *((volatile uint8_t *)0xFC7)
+    #define SSPCON1_REG *((volatile uint8_t *)0xFC6)
+    #define SSPBUF_REG  *((volatile uint8_t *)0xFC9)
 #endif  // MCU_TYPE
 
 #endif //_REGISTERS_H_
