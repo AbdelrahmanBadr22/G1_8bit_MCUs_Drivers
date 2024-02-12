@@ -12,7 +12,7 @@ void SPI_MASTER_Init()
         //initalize it as master
         SET_BIT(SPCR, SPCR_MSTR);
         //set configuration
-        void Config_Helper();
+        AVR_Config_Helper();
         //CLK FOR MASTER 128
         SET_BIT(SPCR, SPCR_SPR0);
         SET_BIT(SPCR, SPCR_SPR1);
@@ -56,7 +56,7 @@ void SPI_SLAVE_Init()
         //initalize it as slave
         CLR_BIT(SPCR, SPCR_MSTR);
         //set configuration
-        void Config_Helper();
+        AVR_Config_Helper();
     #elif MCU_TYPE == _PIC
     //SS pin control
     #if SPI_SS_MODE == ENABLE
