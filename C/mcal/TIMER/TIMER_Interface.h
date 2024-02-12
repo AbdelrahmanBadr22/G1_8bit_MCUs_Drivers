@@ -67,7 +67,15 @@
 /* Timer2 interrupt sources */
 #define TIMER2_INTERRUPT_OVERFLOW (2)
 #define TIMER2_INTERRUPT_CTC      (3)
+/*PIC*/
+#define TIMER_MODE        (1)
+#define COUNTER_MODE      (2)
 
+#define RAISING_EDGE    (1)
+#define FALING_EDGE     (2)
+
+#define DISABLED            (1)
+#define ENABLED             (2)
 
 error_t TIMER0_Init(uint8_t kMode, uint8_t kClock);
 void TIMER0_SetPreload(uint8_t preloadValue);

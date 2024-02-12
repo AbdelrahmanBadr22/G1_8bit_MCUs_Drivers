@@ -112,6 +112,9 @@
     #define TRISC_REG   *((volatile uint8_t *)0xF94)
     #define PIR1_REG    *((volatile uint8_t *)0xF9E)
     #define BAUDCTL_REG *((volatile uint8_t *)0xFB8)
+    #define TMR0H_REG   *((volatile uint8_t *)0xFD7)
+    #define TMR0L_REG   *((volatile uint8_t *)0xFD6)
+    #define T0CON_REG   *((volatile uint8_t *)0xFD5)
 #endif  // MCU_TYPE
 
 #endif //_REGISTERS_H_
