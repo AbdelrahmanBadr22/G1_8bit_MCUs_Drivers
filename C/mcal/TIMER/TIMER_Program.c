@@ -22,8 +22,10 @@ void(*pOVF_CallBackFunctions[3])(void) = {NULL_PTR};
 void(*pCTC_CallBackFunctions[4])(void) = {NULL_PTR};
 void(*pICU_CallBackFunction)(void) = NULL_PTR;
 /*PIC*/
+#if MCU_TYPE == _PIC
 static uint16 preload_value = 0;
 static void ( * Interrupt_Action) (void)=NULL_PTR;
+#endif
 
 error_t TIMER0_Init(uint8_t kMode, uint8_t kClock)
 {
