@@ -51,25 +51,25 @@
 #if SPI_DATA_ORDER != MSB_FIRST
 #if SPI_DATA_ORDER != LSB_FIRST
 #error "[SPI_config]: Invalid data order"
-#endif 
+#endif
 #endif
 
 #if SPI_CLK_POLARITY != IDLE_LOW
 #if SPI_CLK_POLARITY != IDLE_HIGH
 #error "[SPI_config]: Invalid clock polarity"
-#endif 
+#endif
 #endif
 
 #if SPI_CLK_PHASE != SAMPLE_FIRST
 #if SPI_CLK_PHASE != SETUP_FIRST
 #error "[SPI_config]: Invalid clock phase"
-#endif 
+#endif
 #endif
 
 #if SPI_INTERRUPT != MSB_FIRST
 #if SPI_INTERRUPT != LSB_FIRST
 #error "[SPI_config]: Invalid data order"
-#endif 
+#endif
 #endif
 
 #if SPI_CLK_MODE != CLK_4
@@ -77,15 +77,15 @@
 #if SPI_CLK_MODE != CLK_64
 #if SPI_CLK_MODE != TMR2_output_2
 #error "[SPI_config]: Invalid clock mode"
-#endif 
 #endif
-#endif 
+#endif
+#endif
 #endif
 
 #if SPI_SS_MODE != ENABLE
 #if SPI_SS_MODE != DISABLE
 #error "[SPI_config]: Invalid SS Mode"
-#endif 
+#endif
 #endif
 
 #if SPI_MODE != MODE_1
@@ -93,15 +93,15 @@
 #if SPI_MODE != MODE_3
 #if SPI_MODE != MODE_4
 #error "[SPI_config]: Invalid spi mode"
-#endif 
+#endif
 #endif
 #endif
 
 #if SPI_SAMPLE_MODE != END
 #if SPI_SAMPLE_MODE != MIDDLE
 #error "[SPI_config]: Invalid sample mode"
-#endif 
+#endif
 #endif
 
-#endif 
+#endif
 #endif

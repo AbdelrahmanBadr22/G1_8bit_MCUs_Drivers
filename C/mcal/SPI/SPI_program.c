@@ -67,7 +67,7 @@ static void PIC_Config_Helper()
     #endif
 }
 
-static void PIC_SPI_MASTER_Init() 
+static void PIC_SPI_MASTER_Init()
 {
     #if  MCU_TYPE == _PIC
     //set SPI CLK MODE
@@ -81,7 +81,7 @@ static void PIC_SPI_MASTER_Init()
     #endif // MCU_TYPE
 }
 
-static void PIC_SPI_SLAVE_Init() 
+static void PIC_SPI_SLAVE_Init()
 {
     #if MCU_TYPE == _PIC
     //SS pin control
@@ -149,7 +149,7 @@ static void AVR_Config_Helper()
     #endif
 }
 
-static void AVR_SPI_MASTER_Init() 
+static void AVR_SPI_MASTER_Init()
 {
     #if  MCU_TYPE == _AVR
         //initialize it as master
@@ -163,7 +163,7 @@ static void AVR_SPI_MASTER_Init()
     #endif // MCU_TYPE
 }
 
-static void AVR_SPI_SLAVE_Init() 
+static void AVR_SPI_SLAVE_Init()
 {
     #if  MCU_TYPE == _AVR
     //initialize it as slave
@@ -172,7 +172,7 @@ static void AVR_SPI_SLAVE_Init()
     AVR_Config_Helper();
     #endif // MCU_TYPE
 }
-#endif 
+#endif
 
 //-----------------------------------------------------------------------------
 ///////////////// SPI FUNCTIONS ///////////////////////////////////////////////
@@ -203,7 +203,7 @@ error_t SPI_Write(uint8_t data)
 {
     error_t kErrorState = kNoError;
     uint8_t counter = 0;
-    
+
     #if MCU_TYPE == _AVR
       #define SPI_WRITE_REG                  (SPDR)
       #define SPI_GET_TRANSFER_STATUS()      (GET_BIT(SPSR, SPSR_SPIF))
@@ -213,19 +213,19 @@ error_t SPI_Write(uint8_t data)
     #else
       #error "Unkown MCU"
     #endif
-    
+
     SPI_WRITE_REG = data;
-    
+
     while ((SPI_GET_TRANSFER_STATUS() == 0) && (counter < SPI_TIMEOUT))
     {
         counter++;
     }
-    
+
     if (counter == SPI_TIMEOUT)
     {
         kErrorState = kTimeoutError;
     }
-    
+
     return kErrorState;
 }
 
@@ -233,7 +233,7 @@ error_t SPI_Read(uint8_t* data)
 {
     error_t kErrorState = kNoError;
     uint16 counter = 0;
-    
+
     #if MCU_TYPE == _AVR
       #define SPI_WRITE_REG              (SPDR)
       #define SPI_GET_READ_STATUS_FINISHED()    (GET_BIT(SPSR, SPSR_SPIF) == 0)
@@ -251,19 +251,14 @@ error_t SPI_Read(uint8_t* data)
     if (counter == SPI_TIMEOUT)
     {
         kErrorState = kTimeoutError;
-    } 
-    else 
+    }
+    else
     {
         *data = SPI_WRITE_REG;
     }
     #if MCU_TYPE == _PIC  // EXTRA STUFF SHOULD BE HANDLED FOR PIC
     CLR_BIT(SSPSTAT_REG, SSPSTAT_BF);
     CLR_BIT(PIR1_REG, PIR1_SSPIF);
-    #endif 
+    #endif
     return kErrorState;
 }
-
-
-
-
-
