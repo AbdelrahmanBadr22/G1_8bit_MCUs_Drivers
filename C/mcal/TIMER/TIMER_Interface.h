@@ -83,6 +83,15 @@
 #define PWM1_INVERTING     (0)
 #define PWM1_NON_INVERTING (1)
 
+/*PIC*/
+#define TIMER_MODE        (1)
+#define COUNTER_MODE      (2)
+
+#define RAISING_EDGE    (1)
+#define FALLING_EDGE     (2)
+
+#define DISABLED            (1)
+#define ENABLED             (2)
 
 error_t TIMER0_Init(uint8_t kMode, uint8_t kClock);
 void TIMER0_SetPreload(uint8_t preloadValue);
