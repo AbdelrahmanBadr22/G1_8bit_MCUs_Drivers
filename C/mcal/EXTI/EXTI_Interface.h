@@ -18,6 +18,11 @@
 #define EXTI_LOW_LEVEL    (6)
 #define EXTI_ON_CHANGE   (7)
 
+#if MCU_TYPE == _PIC
+    #define EXTI_HIGH_PRIORITY (8)
+    #define EXTI_LOW_PRIORITY (9)
+#endif
+
 error_t EXTI_InterruptEnable (uint8_t kInterruptSource);
 /**
  * @brief
@@ -60,5 +65,26 @@ error_t EXTI_SetSenseControl(uint8_t kInterruptSource, uint8_t kSenseControl);
  *                  :kFunctionParameterError:
  *                         if function  parameter is wrong
  */
-error_t EXTI_SetCallBackFun  (uint8_t kInterruptSource, void (*pFun)(void));
+error_t EXTI_SetCallBackFun(uint8_t kInterruptSource, void (*pFun)(void));
+#if MCU_TYPE == _PIC
+/**
+ * @brief             : This function is used to set priority
+ *
+ * @param kInterruptSource  : copy from EXTI Number   OPTIONS:
+ *                             [EXTI_INT0 ,EXTI_INT0 , EXTI_INT0]
+ *
+ * @param kInterruptPriority : copy from state of priority OPTIONS:
+ *                              [ENABLED ,DISABLED]
+ * @param kPriorityLevel : copy from level of priority   OPTIONS:
+ *                              [EXTI_HIGH_PRIORITY ,EXTI_LOW_PRIORITY]
+ *      NOTE: If Disabled is chosen , Priority level is not considered
+ * @return  error_t :NoError:
+ *                        if function  parameter is Correct
+ *                  :kFunctionParameterError:
+ *                         if function  parameter is wrong
+ */
+error_t EXTI_SetPriority(uint8_t kInterruptSource,
+                         uint8_t kInterruptPriority,
+                         uint8_t kPriorityLevel);
+#endif
 #endif /* MCAL_EXTI_EXTI_INTERFACE_H_ */

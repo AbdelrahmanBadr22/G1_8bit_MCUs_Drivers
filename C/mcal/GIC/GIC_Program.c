@@ -23,6 +23,14 @@ error_t GIC_voidGlobalInterruptControl(uint8_t copyControl)
 
 		default: kErrorState = kFunctionParameterError;	break;
 	}
+	#elif MCU_TYPE == _PIC
+	switch (copyControl)
+	{
+		case GLOBAL_INTERRUPT_ENABLE  : SET_BIT(INTCON_REG, INTCON_GIE); break;
+		case GLOBAL_INTERRUPT_DISABLE : CLR_BIT(INTCON_REG, INTCON_GIE); break;
+
+		default: kErrorState = kFunctionParameterError;	break;
+	}
 	#endif
 	return kErrorState;
 }
