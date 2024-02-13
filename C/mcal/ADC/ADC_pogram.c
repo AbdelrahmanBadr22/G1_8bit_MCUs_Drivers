@@ -8,8 +8,6 @@
 #include "ADC_config.h"
 #include "ADC_interface.h"
 
-
-static void (*ISRfunction)(void) =NULL;
 static uint16* aSynchResult;
 error_t ADC_Init (void)
 {
