@@ -9,6 +9,7 @@
 #include "ADC_interface.h"
 
 static uint16* aSynchResult;
+
 error_t ADC_Init (void)
 {
     error_t kErrorState = kNoError;
