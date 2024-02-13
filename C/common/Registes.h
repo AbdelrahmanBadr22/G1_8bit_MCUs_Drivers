@@ -43,6 +43,25 @@
     #define OCR1BH       *((volatile uint8_t *)0X49)
     #define OCR1BL       *((volatile uint8_t *)0X48)
     #define OCR1B        *((volatile uint16  *)0X48)
+    #define ICR1BH       *(volatile uint8_t *)(0X47)
+    #define ICR1BL       *(volatile uint8_t *)(0X46)
+    #define ICR1         *(volatile uint16  *)(0X46)
+
+    #define TCCR2        *((volatile uint8_t *)0X45)
+    #define TCNT2        *((volatile uint8_t *)0X44)
+    #define OCR2         *((volatile uint8_t *)0X43)
+
+    #define TCCR1A       *((volatile uint8_t *)0X4F)
+    #define TCCR1B       *((volatile uint8_t *)0X4E)
+    #define TCNT1H       *((volatile uint8_t *)0X4D)
+    #define TCNT1L       *((volatile uint8_t *)0X4C)
+    #define TCNT1        *((volatile uint16  *)0X4C)
+    #define OCR1AH       *((volatile uint8_t *)0X4B)
+    #define OCR1AL       *((volatile uint8_t *)0X4A)
+    #define OCR1A        *((volatile uint16  *)0X4A)
+    #define OCR1BH       *((volatile uint8_t *)0X49)
+    #define OCR1BL       *((volatile uint8_t *)0X48)
+    #define OCR1B        *((volatile uint16  *)0X48)
 
     #define TCCR2        *((volatile uint8_t *)0X45)
     #define TCNT2        *((volatile uint8_t *)0X44)
@@ -54,6 +73,11 @@
     #define UBRRL_REG   *((volatile uint8_t *)0X29)
     #define UBRRH_REG   *((volatile uint8_t *)0X40)
     #define UDR_REG     *((volatile uint8_t *)0X2C)
+
+    #define SPDR        *((volatile uint8_t *)0X2F)/* SPI Data Register */
+    #define SPCR        *((volatile uint8_t *)0X2D)/* SPI Control Register */
+    #define SPSR        *((volatile uint8_t *)0X2E)/* SPI Status Register */
+
     #define TWCR       *((volatile uint8_t *)0x56) /* TWI Control Register */
     #define TWDR       *((volatile uint8_t *)0x23) /* TWI Data Register */
     #define TWAR       *((volatile uint8_t *)0x22) /* TWI Address Register */
@@ -112,6 +136,9 @@
     #define TRISC_REG   *((volatile uint8_t *)0xF94)
     #define PIR1_REG    *((volatile uint8_t *)0xF9E)
     #define BAUDCTL_REG *((volatile uint8_t *)0xFB8)
+    #define SSPSTAT_REG *((volatile uint8_t *)0xFC7)
+    #define SSPCON1_REG *((volatile uint8_t *)0xFC6)
+    #define SSPBUF_REG  *((volatile uint8_t *)0xFC9)
     #define TMR0H_REG   *((volatile uint8_t *)0xFD7)
     #define TMR0L_REG   *((volatile uint8_t *)0xFD6)
     #define T0CON_REG   *((volatile uint8_t *)0xFD5)
