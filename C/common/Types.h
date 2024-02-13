@@ -19,6 +19,9 @@ typedef signed   long sint32_t;                  //IGNORE-STYLE-CHECK[B004]
 #define HIGH (1)
 #define LOW  (0)
 
+#define ENABLED  (1)
+#define DISABLED (0)
+
 // typedef unsigned short uint16_t;
 // typedef signed   short sint16_t;
 
