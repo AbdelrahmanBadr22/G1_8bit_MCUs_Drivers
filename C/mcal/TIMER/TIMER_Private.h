@@ -19,7 +19,7 @@
 #define TCCR0_CS00   (0)
 #define TIMSK_TOIE0  (0) /* Timer0 Overflow Interrupt Enable */
 #define TIMSK_OCIE0  (1) /* Output Compare Interrupt Enable */
-#define TIFR_TV0     (0)
+#define TIFR_OCF0     (1)
 
 #define TCCR1A_COM1A1 (7) /* Compare Output Mode for Channel A */
 #define TCCR1A_COM1A0 (6) /* Compare Output Mode for Channel A */

@@ -1,5 +1,5 @@
 #ifndef DELAY_H_
 #define DELAY_H_
 
-void Delay10ms();
+void Delay_ms(uint16 delay);
 #endif
