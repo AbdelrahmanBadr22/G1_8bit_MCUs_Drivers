@@ -14,8 +14,12 @@
 #define TCCR0_WGM01  (3) /* Waveform  Generation Mode 1*/
 #define TCCR0_COMM01 (5) /* Compare Match Output Mode */
 #define TCCR0_COMM00 (4) /* Compare Match Output Mode */
+#define TCCR0_CS02   (2)
+#define TCCR0_CS01   (1)
+#define TCCR0_CS00   (0)
 #define TIMSK_TOIE0  (0) /* Timer0 Overflow Interrupt Enable */
 #define TIMSK_OCIE0  (1) /* Output Compare Interrupt Enable */
+#define TIFR_TV0     (0)
 
 #define TCCR1A_COM1A1 (7) /* Compare Output Mode for Channel A */
 #define TCCR1A_COM1A0 (6) /* Compare Output Mode for Channel A */
