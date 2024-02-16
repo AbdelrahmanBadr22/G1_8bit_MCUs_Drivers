@@ -8,6 +8,7 @@
 
 static void Timer_Init()
 {
+    #if MCU_TYPE == _AVR
     /*timer0 CTC mode*/
     SET_BIT(TCCR0, TCCR0_WGM01);
     /*prescaler 64*/
@@ -16,16 +17,20 @@ static void Timer_Init()
     SET_BIT(TCCR0, TCCR0_CS00);
     /*compare match value for 1ms delay at 8MHz*/
     OCR0 = 125;
+    #endif
 }
 void Delay_ms(uint16 delay)
 {
     Timer_Init();
+
     for (uint16 counter =0; counter<delay; counter++)
     {
+        #if MCU_TYPE == _AVR
         while (GET_BIT(TIFR, TIFR_OCF0) == 0)
         {
 
         }
         SET_BIT(TIFR, TIFR_OCF0);
+        #endif
     }
 }
