@@ -2,8 +2,8 @@
 #include "../../common/Registes.h"
 #include "../../common/Types.h"
 #include "../../common/Utils.h"
-#include "/home/noura/G1_8bit_MCUs_Drivers/C/mcal/TIMER/TIMER_Interface.h"
-#include "/home/noura/G1_8bit_MCUs_Drivers/C/mcal/TIMER/TIMER_Private.h"
+#include "../../../C/mcal/TIMER/TIMER_Interface.h"
+#include "../../../C/mcal/TIMER/TIMER_Private.h"
 #include "Delay.h"
 
 void Delay10ms()
