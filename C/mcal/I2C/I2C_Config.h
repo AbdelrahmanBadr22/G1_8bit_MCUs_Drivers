@@ -8,10 +8,6 @@
 #ifndef MCAL_I2C_I2C_CONFIG_H_
 #define MCAL_I2C_I2C_CONFIG_H_
 
-#ifndef F_CPU
-#define F_CPU (8000000UL)
-#endif
-
 /**
  * @brief Set the Prescaler
  *  Options:

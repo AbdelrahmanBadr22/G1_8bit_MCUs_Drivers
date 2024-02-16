@@ -37,4 +37,6 @@
 #define RCON_IPEN           (7)
 #define INTCON_PEIE         (6)
 #define INTCON_GIE          (7)
+#define PIR1_ADIF        (6)
+#define PIE1_ADIE        (6)
 #endif
