@@ -17,7 +17,7 @@ void Delay10ms()
     TCNT0 = 0xB2;
     while (GET_BIT(TIFR, TIFR_TV0) == 0)
     {
-        
+
     }
     TCCR0 = 0;
     SET_BIT(TIFR, TIFR_TV0);
