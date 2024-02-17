@@ -76,7 +76,9 @@ error_t TIMER0_SetOCPinMode(uint8_t kOCPinMode);
 error_t TIMER0_SetDutyCycle(uint8_t dutyCycle);
 error_t TIMER0_SetCallBackFun(uint8_t interruptSource,
                                             void (*pTimer_ISR)(void));
-
+// TODO(@MohamedRefat13): Make this function more generic for all prescalar
+// cases
+void TIMER0_SetPreScalar();
 
 error_t TIMER1_Init(uint8_t kMode, uint8_t kClock);
 void TIMER1_SetPreload(uint16 preloadValue );

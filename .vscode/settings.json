@@ -1,6 +1,10 @@
 {
     "files.associations": {
+        "config.h": "c",
+        "delay.h": "c",
+        "lcd_interface.h": "c",
         "gpio.h": "c",
-        "utils.h": "c"
+        "types.h": "c",
+        "calculator.h": "c"
     }
 }
