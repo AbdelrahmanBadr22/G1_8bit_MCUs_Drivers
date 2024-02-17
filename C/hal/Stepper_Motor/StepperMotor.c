@@ -1,5 +1,6 @@
 #include "../../common/Types.h"
 #include "../../mcal/GPIO/GPIO.h"
+#include "../../utils/Delay/Delay.h"
 #include "StepperMotor.h"
 
 error_t Stepper_Init(StepperMotor_t * pStepper)
@@ -81,17 +82,17 @@ void ClockWiseFullStep(StepperMotor_t * pStepper)
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kLow);
-        //delay
+        Delay_ms(2);
         GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kHigh);
         GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kLow);
-        //delay
+        Delay_ms(2);
         GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kHigh);
         GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kLow);
-        //delay
+        Delay_ms(2);
         GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kLow);
@@ -101,23 +102,23 @@ void ClockWiseFullStep(StepperMotor_t * pStepper)
 void AntiClockWiseFullStep(StepperMotor_t * pStepper)
 {
         GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kLow);
-        GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kLow);
-        GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kLow);
-        GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kHigh);
-        //delay
-        GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kLow);
-        GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kLow);
-        GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kHigh);
-        GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kLow);
-        //delay
-        GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kHigh);
-        GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kLow);
-        GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kLow);
-        //delay
+        GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kHigh);
+        GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kHigh);
+        Delay_ms(2);
         GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kHigh);
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kLow);
+        GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kHigh);
+        GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kHigh);
+        Delay_ms(2);
+        GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kHigh);
+        GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kHigh);
         GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kLow);
+        GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kHigh);
+        Delay_ms(2);
+        GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kHigh);
+        GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kHigh);
+        GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kHigh);
         GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kLow);
 }
 void ClockWiseHalfStep(StepperMotor_t * pStepper)
@@ -126,37 +127,37 @@ void ClockWiseHalfStep(StepperMotor_t * pStepper)
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kLow);
-        //delay
+        Delay_ms(2);
         GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kHigh);
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kHigh);
         GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kLow);
-        //delay
+        Delay_ms(2);
         GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kHigh);
         GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kLow);
-        //delay
+        Delay_ms(2);
         GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kHigh);
         GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kHigh);
         GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kLow);
-        //delay
+        Delay_ms(2);
         GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kHigh);
         GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kLow);
-        //delay
+        Delay_ms(2);
         GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kHigh);
         GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kHigh);
-        //delay
+        Delay_ms(2);
         GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kHigh);
-        //delay
+        Delay_ms(2);
         GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kHigh);
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kLow);
@@ -168,37 +169,37 @@ void AntiClockWiseHalfStep(StepperMotor_t * pStepper)
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kHigh);
-        //delay
+        Delay_ms(2);
         GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kHigh);
-        //delay
+        Delay_ms(2);
         GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kHigh);
         GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kHigh);
-        //delay
+        Delay_ms(2);
         GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kHigh);
         GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kLow);
-        //delay
+        Delay_ms(2);
         GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kHigh);
         GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kHigh);
         GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kLow);
-        //delay
+        Delay_ms(2);
         GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kHigh);
         GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kLow);
-        //delay
+        Delay_ms(2);
         GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kHigh);
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kHigh);
         GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->orangePin, kLow);
-        //delay
+        Delay_ms(2);
         GPIO_SetPinValue(pStepper->port, pStepper->bluePin, kHigh);
         GPIO_SetPinValue(pStepper->port, pStepper->pinkPin, kLow);
         GPIO_SetPinValue(pStepper->port, pStepper->yellowPin, kLow);
