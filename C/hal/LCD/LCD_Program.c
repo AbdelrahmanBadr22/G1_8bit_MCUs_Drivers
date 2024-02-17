@@ -1,7 +1,5 @@
 #include "Config.h"
-#if MCU_TYPE == _AVR
-#include <util/delay.h>
-#endif
+#include "Delay.h"
 
 #include "../../common/Types.h"
 #include "../../mcal/GPIO/GPIO.h"
@@ -29,19 +27,19 @@ error_t LCD_Init(lcd_t *pLcdConfig)
 			/* SET Direction for LCD data  pins --> OUTPUT */
 			GPIO_SetPortDirection(pLcdConfig->kLcdDataPort, kOutput_PORT);
 
-			_delay_ms(50);
+			Delay_ms(50);
 			/* Function Set */
 			LCD_SendCommand(pLcdConfig, LCD_FUNCTION_SET_8_BIT);
-			_delay_ms(1);
+			Delay_ms(1);
 			/*   Display ON/OFF Control */
 			LCD_SendCommand(pLcdConfig, LCD_DISPLAY_ON_CURSOR_OFF);
-			_delay_ms(1);
+			Delay_ms(1);
 			/*  Clear Screen */
 			LCD_SendCommand(pLcdConfig, LCD_CLEAR_SCREEN);
-			_delay_ms(5);
+			Delay_ms(5);
 			/* Entry mode set */
 			LCD_SendCommand(pLcdConfig, LCD_ENTRY_MODE_INC_SHIFT_OFF);
-			_delay_ms(1);
+			Delay_ms(1);
 		}
 		else if (pLcdConfig->kLcdMode == LCD_4Bit)
 		{
@@ -56,19 +54,19 @@ error_t LCD_Init(lcd_t *pLcdConfig)
 
 			}
 			LCD_SendCommand(pLcdConfig, LCD_RETURN_HOME);
-			_delay_ms(50);
+			Delay_ms(50);
 			/* Function Set */
 			LCD_SendCommand(pLcdConfig, LCD_FUNCTION_SET_4_BIT);
-			_delay_ms(1);
+			Delay_ms(1);
 			/*   Display ON/OFF Control */
 			LCD_SendCommand(pLcdConfig, LCD_DISPLAY_ON_CURSOR_OFF);
-			_delay_ms(1);
+			Delay_ms(1);
 			/*  Clear Screen */
 			LCD_SendCommand(pLcdConfig, LCD_CLEAR_SCREEN);
-			_delay_ms(5);
+			Delay_ms(5);
 			/* Entry mode set */
 			LCD_SendCommand(pLcdConfig, LCD_ENTRY_MODE_INC_SHIFT_OFF);
-			_delay_ms(5);
+			Delay_ms(5);
 		}
 
 	}else
@@ -166,9 +164,9 @@ static error_t LCD_SendFallingEndgPulse(lcd_t *pLcdConfig)
 	if (pLcdConfig != NULL_PTR)
 	{
 		GPIO_SetPinValue(pLcdConfig->kLcdControlPort, pLcdConfig->kEN_PinNum, kHigh );
-		_delay_ms(1);
+		Delay_ms(1);
 		GPIO_SetPinValue(pLcdConfig->kLcdControlPort, pLcdConfig->kEN_PinNum, kLow );
-		_delay_ms(1);
+		Delay_ms(1);
 
 	}else
 	{
@@ -183,7 +181,7 @@ error_t LCD_ClearScreen(lcd_t *pLcdConfig)
 	if (pLcdConfig != NULL_PTR)
 	{
 		LCD_SendCommand(pLcdConfig, LCD_CLEAR_SCREEN);
-		_delay_ms(1);
+		Delay_ms(1);
 
 	}else
 	{
@@ -245,7 +243,7 @@ error_t LCD_SetPosition(lcd_t *pLcdConfig, uint8_t kRowNum, uint8_t kColumnNum)
 			command = LCD_DDRAM_START + 64 +  kColumnNum -1;
 		}
 		LCD_SendCommand(pLcdConfig, command);
-		_delay_ms(1);
+		Delay_ms(1);
 	}else
 	{
 		kErrorState = kFunctionParameterError;

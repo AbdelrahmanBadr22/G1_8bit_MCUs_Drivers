@@ -37,16 +37,16 @@ void Test_SendString(lcd_t _LCD)
 {
     uint8_t str[30]={"MOHAMED REFAT"};
     LCD_SendString(&_LCD, str);
-    _delay_ms(2500);
+    Delay_ms(2500);
     LCD_ClearScreen(&_LCD);
 }
 void Test_SendSNumber_SendFloat(lcd_t _LCD)
 {
     LCD_SendFloat(&_LCD, 79.9);
-    _delay_ms(2500);
+    Delay_ms(2500);
     LCD_ClearScreen(&_LCD);
     LCD_SendNumber(&_LCD, 80);
-    _delay_ms(2500);
+    Delay_ms(2500);
     LCD_ClearScreen(&_LCD);
 
 }
@@ -55,7 +55,7 @@ void Test_SetPosition(lcd_t _LCD)
     uint8_t str[30]={"MOHAMED REFAT"};
     LCD_SetPosition(&_LCD, LCD_ROW_2, LCD_COL_3);
     LCD_SendString(&_LCD, str);
-    _delay_ms(2500);
+    Delay_ms(2500);
     LCD_ClearScreen(&_LCD);
 }
 void Test_ShiftRight_ShiftLeft(lcd_t _LCD)
@@ -64,10 +64,10 @@ void Test_ShiftRight_ShiftLeft(lcd_t _LCD)
     LCD_SendString(&_LCD, str1);
     LCD_ShiftRight(&_LCD);
     LCD_ShiftRight(&_LCD);
-    _delay_ms(2500);
+    Delay_ms(2500);
     LCD_ShiftLeft(&_LCD);
     LCD_ShiftLeft(&_LCD);
-    _delay_ms(2500);
+    Delay_ms(2500);
     LCD_ClearScreen(&_LCD);
     
 }
@@ -76,9 +76,9 @@ void Test_CursorEnable_CursorDisable(lcd_t _LCD)
 uint8_t str[30]={"TEST CURSOR"};
     LCD_SendString(&_LCD, str);
     LCD_EnableCursor(&_LCD);
-    _delay_ms(2500);
+    Delay_ms(2500);
     LCD_DisableCursor(&_LCD);
-    _delay_ms(2500);
+    Delay_ms(2500);
     LCD_ClearScreen(&_LCD);
     
 }
@@ -86,11 +86,11 @@ void Test_DisplayOn_DisplayOff(lcd_t _LCD)
 {
     uint8_t str[30]={"DISPLAY ON/OFF"};
     LCD_SendString(&_LCD, str);
-    _delay_ms(1000);
+    Delay_ms(1000);
     LCD_Display_Off(&_LCD);
-    _delay_ms(2500);
+    Delay_ms(2500);
     LCD_Display_On(&_LCD);
-    _delay_ms(2500);
+    Delay_ms(2500);
     LCD_ClearScreen(&_LCD);
 }
 void Test_BlinkOn_BlinkOff(lcd_t _LCD)
@@ -98,9 +98,9 @@ void Test_BlinkOn_BlinkOff(lcd_t _LCD)
     uint8_t str[30]={"BLINK ON/OFF"};
     LCD_SendString(&_LCD, str);
     LCD_Blink_On(&_LCD);
-    _delay_ms(2500);
+    Delay_ms(2500);
     LCD_Blink_Off(&_LCD);
-    _delay_ms(2500);
+    Delay_ms(2500);
     LCD_DisableCursor(&_LCD);
     LCD_ClearScreen(&_LCD);
 
@@ -117,6 +117,6 @@ void Test_CustoCharacter(lcd_t _LCD)
     LCD_StoreCustomChar(&_LCD, skull, 0);
     LCD_SendCustomChar(&_LCD, 5, LCD_ROW_2, LCD_COL_8);
     LCD_SendCustomChar(&_LCD, 0, LCD_ROW_2, LCD_COL_9);
-    _delay_ms(3000);
+    Delay_ms(3000);
     LCD_ClearScreen(&_LCD);
 }

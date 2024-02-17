@@ -20,7 +20,7 @@ int main()
     ADC_GetResultSynch(ADC_CHANNEL4, &digitalValue);
     analogValue = (digitalValue * 5000LU) / (1024);
     LCD_SendNumber(&lcd, analogValue);
-    _delay_ms(100);
+    Delay_ms(100);
     LCD_ClearScreen(&lcd);
   }
 }

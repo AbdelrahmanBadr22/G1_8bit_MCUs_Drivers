@@ -13,12 +13,12 @@ int main()
 		for (int i = 0; i <= 180 ; i+=10)
 		{
 			Servo_SetAngle(i, SERVO_OC1B_PIN);
-			_delay_ms(500);
+			Delay_ms(500);
 		}
 		for (int i = 180; i >= 0 ; i-=10)
 		{
 			Servo_SetAngle(i, SERVO_OC1B_PIN);
-			_delay_ms(500);
+			Delay_ms(500);
 		}
 	}
 }
