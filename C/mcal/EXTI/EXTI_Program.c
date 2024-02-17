@@ -11,7 +11,6 @@
 #include "../../common/Registes.h"
 #include "../ISR/ISR_private.h"
 #include "../ISR/ISR.h"
-#include "EXTI_Private.h"
 #include "EXTI_Interface.h"
 
 

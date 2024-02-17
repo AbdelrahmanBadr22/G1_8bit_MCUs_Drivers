@@ -3,7 +3,6 @@
 #include "../../common/Types.h"
 #include "../../common/Utils.h"
 #include "../../../C/mcal/TIMER/TIMER_Interface.h"
-#include "../../../C/mcal/TIMER/TIMER_Private.h"
 #include "Delay.h"
 
 static void Timer_Init()

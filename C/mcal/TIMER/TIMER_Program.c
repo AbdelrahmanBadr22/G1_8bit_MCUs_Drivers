@@ -15,7 +15,6 @@
 
 #include "../../mcal/GPIO/GPIO.h"
 #include "TIMER_Interface.h"
-#include "TIMER_Private.h"
 
 void(*pOVF_CallBackFunctions[3])(void) = {NULL_PTR};
 void(*pCTC_CallBackFunctions[4])(void) = {NULL_PTR};
