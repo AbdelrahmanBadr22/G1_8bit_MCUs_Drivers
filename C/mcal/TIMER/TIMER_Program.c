@@ -13,7 +13,7 @@
 #include "../../common/Types.h"
 #include "../../common/Utils.h"
 
-
+#include "../../mcal/GPIO/GPIO.h"
 #include "TIMER_Interface.h"
 #include "TIMER_Private.h"
 
@@ -179,17 +179,12 @@ error_t TIMER1_Init(uint8_t kMode, uint8_t kClock)
             break;
 
         case TIMER_PWM_MODE:
-            /* Set Timer Mode To Fast PWM 10 bit*/
-            SET_BIT(TCCR1A, TCCR1A_WGM10);
+            /* Set Timer Mode To Fast PWM and the top value is ICR1 */
+            CLR_BIT(TCCR1A, TCCR1A_WGM10);
             SET_BIT(TCCR1A, TCCR1A_WGM11);
             SET_BIT(TCCR1B, TCCR1B_WGM12);
-            CLR_BIT(TCCR1B, TCCR1B_WGM13);
-            /* Set PWM Output To Inverting
-                Clear on Top Set On Compare
-            */
-            SET_BIT(TCCR1A, TCCR1A_COM1A0);
-            SET_BIT(TCCR1A, TCCR1A_COM1A1);
-            break;
+            SET_BIT(TCCR1B, TCCR1B_WGM13);
+
         default: kErrorState = kFunctionParameterError;
     }
 
@@ -286,15 +281,83 @@ error_t TIMER1_SetOCBPinMode(uint8_t kOCPinMode)
     return kErrorState;
 }
 
-error_t TIMER1_SetDutyCycle(uint8_t dutyCycle)
+error_t TIMER1_SetPWM_Channel_Mode(uint8_t kChannel, uint8_t kMode)
 {
     error_t kErrorState = kNoError;
     #if MCU_TYPE == _AVR
-    if (dutyCycle <= 100)
+    if ( kChannel == PWM1_OC1A )
     {
-        uint16 kOCRValue;
-        kOCRValue = RESOLUTION_10BIT -((dutyCycle/100.0) * RESOLUTION_10BIT);
-        OCR1A = kOCRValue;
+        GPIO_SetPinDirection(kPORTD, kPIN5, kOutput);
+        switch (kMode)
+        {
+            case PWM1_INVERTING:
+                SET_BIT(TCCR1A, TCCR1A_COM1A0);
+                SET_BIT(TCCR1A, TCCR1A_COM1A1);
+                break;
+            case PWM1_NON_INVERTING:
+                CLR_BIT(TCCR1A, TCCR1A_COM1A0);
+                SET_BIT(TCCR1A, TCCR1A_COM1A1);
+                break;
+            default: kErrorState = kFunctionParameterError;
+        }
+    }else if ( kChannel == PWM1_OC1B)
+    {
+        GPIO_SetPinDirection(kPORTD, kPIN4, kOutput);
+        switch (kMode)
+        {
+            case PWM1_INVERTING:
+                SET_BIT(TCCR1A, TCCR1A_COM1B0);
+                SET_BIT(TCCR1A, TCCR1A_COM1B1);
+                break;
+            case PWM1_NON_INVERTING:
+                CLR_BIT(TCCR1A, TCCR1A_COM1B0);
+                SET_BIT(TCCR1A, TCCR1A_COM1B1);
+                break;
+            default: kErrorState = kFunctionParameterError;
+        }
+    }else
+    {
+    	kErrorState = kFunctionParameterError;
+    }
+    #endif
+    return kErrorState;
+}
+error_t TIMER1_SetPWM_Freq(uint32_t frequency, uint32_t kPrescaler)
+{
+    error_t kErrorState = kNoError;
+    #if MCU_TYPE == _AVR
+    if ( frequency <= CPU_FREQ )
+    {
+            /**
+             * F_PWM = CPU_FREQ/(Prescaler * (1 + TOP ))
+             * TOP = ICR1
+             */
+            ICR1 = ( ( CPU_FREQ ) / ( kPrescaler * frequency ) ) - 1;
+    }else
+    {
+        kErrorState = kFunctionParameterError;
+    }
+    #endif
+    return kErrorState;
+}
+error_t TIMER1_SetDutyCycle(f32_t dutyCycle, uint8_t kChannel)
+{
+    error_t kErrorState = kNoError;
+    #if MCU_TYPE == _AVR
+    if (dutyCycle <= 100 )
+    {
+        /* ICR1 --> Top value of timer1 */
+        uint16 iOCRValue =  ICR1 -((dutyCycle/100.0) * ICR1);
+        if (kChannel == PWM1_OC1A)
+        {
+            OCR1A = iOCRValue;
+        }else if (kChannel == PWM1_OC1B)
+        {
+            OCR1B = iOCRValue;
+        }else
+        {
+            kErrorState = kFunctionParameterError;
+        }
     }else
     {
         kErrorState = kFunctionParameterError;

@@ -6,4 +6,6 @@
 
 //#define MCU_TYPE  (AVR)
 
+#define CPU_FREQ (8000000LU)
+
 #endif // CONFIG_H_H
