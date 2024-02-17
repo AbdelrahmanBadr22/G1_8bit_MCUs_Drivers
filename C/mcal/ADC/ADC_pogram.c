@@ -2,7 +2,6 @@
 #include "../../common/Types.h"
 #include "../../common/Utils.h"
 #include "../../common/Registes.h"
-#include "ADC_Private.h"
 #include "ADC_config.h"
 #include "ADC_interface.h"
 
