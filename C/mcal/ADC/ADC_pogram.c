@@ -5,9 +5,8 @@
 #include "ADC_config.h"
 #include "ADC_interface.h"
 
-
-static void (*ISRfunction)(void) =NULL;
 static uint16* aSynchResult;
+
 error_t ADC_Init (void)
 {
     error_t kErrorState = kNoError;
@@ -202,14 +201,14 @@ error_t ADC_StartConvASynch(uint8_t channel, uint16* result,
     {
         #if MCU_TYPE == _AVR
         aSynchResult=result;
-        ISRfunction=function;
+        ISR_Init(ADC_INT, function);
         ADMUX_REG &=ADC_CH_MASK;
         ADMUX_REG =channel;
         SET_BIT(ADCSRA_REG, ADCSRA_ADSC);
         ADC_INTERRUPT_ENABLE();
         #elif MCU_TYPE == _PIC
         aSynchResult = result;
-        ISRfunction=function;
+        ISR_Init(ADC_INT, function);
         ADCON0_REG &= 0b11000011;
         ADCON0_REG |= channel;
         /* Start Conversion */
@@ -233,36 +232,3 @@ error_t ADC_StartConvASynch(uint8_t channel, uint16* result,
     }
     return kErrorState;
 }
-#if MCU_TYPE == _AVR
-void __vector_16(void) __attribute__((signal));
-void __vector_16(void)
-{
-             #if ADC_ADJUSTMENT == RIGHT_ADJUSTMENT
-                *aSynchResult = ADCL_REG | (ADCH_REG<<8);
-
-            #elif ADC_ADJUSTMENT == LEFT_ADJUSTMENT
-                *aSynchResult = ADCH_REG;
-
-            #else
-                kErrorState = kFunctionParameterError;
-            #endif
-            ISRfunction();
-            CLR_BIT(ADCSRA_REG, ADCSRA_ADIE);
-}
-#elif MCU_TYPE == _PIC
-void __interrupt() ADC()
-{
-    #if ADC_ADJUSTMENT == RIGHT_ADJUSTMENT
-        *aSynchResult = ADRESL_REG | (ADRESH_REG<<8);
-
-    #elif ADC_ADJUSTMENT == LEFT_ADJUSTMENT
-        *aSynchResult = (ADRESH_REG>>6) | (ADRESL_REG<<2);
-
-    #else
-        kErrorState = kFunctionParameterError;
-    #endif
-    ISRfunction();
-    //Disable ADC interrupt
-    CLR_BIT(PIE1_REG, PIE1_ADIE);
-}
-#endif
