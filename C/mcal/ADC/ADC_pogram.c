@@ -4,7 +4,6 @@
 #include "../../common/Registes.h"
 #include "../ISR/ISR_private.h"
 #include "../ISR/ISR.h"
-#include "ADC_Private.h"
 #include "ADC_config.h"
 #include "ADC_interface.h"
 
