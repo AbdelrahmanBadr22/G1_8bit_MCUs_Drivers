@@ -3,15 +3,15 @@
  * ------------------------------------------
  *    1) Using built-in function: This will done by including the built-in lib
  *       for the target and use the built-in function directly.
- * 
- *    2) Using busy wait with assembly instructions: This is the same 
+ *
+ *    2) Using busy wait with assembly instructions: This is the same
  *       implementation as built-in function but without including built-in lib
- * 
- *    3) Using timer: We can generate a delay by interfacing with timer and 
+ *
+ *    3) Using timer: We can generate a delay by interfacing with timer and
  *       wait for specific time
  *
- * This infrastructure support three ways according to 'DELAY_METHOD' macro 
- * with three appropiate values 'DELAY_BUILTIN, DELAY_BUSYWAIT, DELAY_TIMER'   
+ * This infrastructure support three ways according to 'DELAY_METHOD' macro
+ * with three appropiate values 'DELAY_BUILTIN, DELAY_BUSYWAIT, DELAY_TIMER'
 */
 #ifndef _DELAY_H_
 #define _DELAY_H_
@@ -29,6 +29,6 @@
 #endif   // DELAY_METHOD != DELAY_BUSYWAIT
 #endif   // DELAY_METHOD != DELAY_BUILTIN
 
-void Delay_ms(uint16 ms);
+void Delay_ms(const uint16 ms);
 // TODO(): Support delay_us
 #endif  // _DELAY_H_

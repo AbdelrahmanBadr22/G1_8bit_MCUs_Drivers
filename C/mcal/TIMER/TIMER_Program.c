@@ -157,7 +157,7 @@ error_t TIMER0_SetCallBackFun(uint8_t interruptSource,
     return kErrorState;
 }
 
-void TIMER0_SetPreScalar() 
+void TIMER0_SetPreScalar()
 {
     #if IS_AVR()
     // Set 64 as pre
