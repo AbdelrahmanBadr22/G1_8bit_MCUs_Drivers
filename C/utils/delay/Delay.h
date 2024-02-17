@@ -16,6 +16,8 @@
 #ifndef _DELAY_H_
 #define _DELAY_H_
 
+#include "Types.h"
+
 #define DELAY_BUILTIN       (1)
 #define DELAY_BUSYWAIT      (2)
 #define DELAY_TIMER         (3)
