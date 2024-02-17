@@ -155,7 +155,15 @@ error_t TIMER0_SetCallBackFun(uint8_t interruptSource,
     return kErrorState;
 }
 
-
+void TIMER0_SetPreScalar()
+{
+    #if IS_AVR()
+    // Set 64 as pre
+    CLR_BIT(TCCR0, TCCR0_CS02);
+    SET_BIT(TCCR0, TCCR0_CS01);
+    SET_BIT(TCCR0, TCCR0_CS00);
+    #endif // IS_AVR
+}
 error_t TIMER1_Init(uint8_t kMode, uint8_t kClock)
 {
     error_t kErrorState = kNoError;

@@ -25,9 +25,9 @@ void Test_SetPinDirection_SetPinValue()
     GPIO_SetPinDirection(kPORTA, kPIN0, kOutput);
 
     GPIO_SetPinValue(kPORTA, kPIN0, kHigh);
-    _delay_ms(500);
+    Delay_ms(500);
     GPIO_SetPinValue(kPORTA, kPIN0,  kLow);
-    _delay_ms(500);
+    Delay_ms(500);
     
 }
 void Test_SetPortDirection_SetPortValue()
@@ -35,9 +35,9 @@ void Test_SetPortDirection_SetPortValue()
     GPIO_SetPortDirection(kPORTB, 1);
 
     GPIO_SetPortValue(kPORTB, 1);
-    _delay_ms(500);
+    Delay_ms(500);
     GPIO_SetPortValue(kPORTB, 0);
-    _delay_ms(500);
+    Delay_ms(500);
 }
 void Test_GetPinValue()
 {
@@ -48,9 +48,9 @@ void Test_GetPinValue()
     if (pinState==kHigh)
     {
         GPIO_SetPinValue(kPORTA, kPIN2, kHigh);
-        _delay_ms(500);
+        Delay_ms(500);
         GPIO_SetPinValue(kPORTA, kPIN2, kLow);
-        _delay_ms(500);
+        Delay_ms(500);
     }
 }
 void Test_GetPortValue()
@@ -62,8 +62,8 @@ void Test_GetPortValue()
    if (portState==0xff)
     {
         GPIO_SetPinValue(kPORTA, kPIN3, kHigh);
-        _delay_ms(500);
+        Delay_ms(500);
         GPIO_SetPinValue(kPORTA, kPIN3, kLow);
-        _delay_ms(500);
+        Delay_ms(500);
     }
 }

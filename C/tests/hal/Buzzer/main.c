@@ -16,23 +16,23 @@ int main()
   while (1)
   {
     TEST_buzzerActiveHigh(&buzzer1);
-    _delay_ms(1000);
+    Delay_ms(1000);
     TEST_buzzerActiveLow(&buzzer2);
   }
 }
 void TEST_buzzerActiveHigh(Buzzer_t *pBuzzer)
 {
   Buzzer_TurnOn(pBuzzer);
-  _delay_ms(1000);
+  Delay_ms(1000);
   Buzzer_TurnOff(pBuzzer);
-  _delay_ms(1000);
+  Delay_ms(1000);
 }
 void TEST_buzzerActiveLow(Buzzer_t *pBuzzer)
 {
   Buzzer_TurnOn(pBuzzer);
-  _delay_ms(1000);
+  Delay_ms(1000);
   Buzzer_TurnOff(pBuzzer);
-  _delay_ms(5000);
+  Delay_ms(5000);
 }
 /*
 #include <util/delay.h>
