@@ -1,7 +1,5 @@
 #include "Config.h"
-#if MCU_TYPE == _AVR
-#include <util/delay.h>
-#endif
+#include "Delay.h"
 
 #include "../../common/Types.h"
 #include "../../mcal/GPIO/GPIO.h"
