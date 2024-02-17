@@ -10,5 +10,8 @@
 
 
 #define SREG_I (7)
+#if MCU_TYPE == _PIC
+#define INTCON_GIE    (7)
+#endif
 
 #endif /* MCAL_GIC_GIE_PRIVATE_H_ */

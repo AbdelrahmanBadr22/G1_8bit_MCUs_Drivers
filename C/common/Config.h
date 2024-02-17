@@ -12,5 +12,6 @@
 // Define frequency
 #define F_CPU          (8000000UL)
 #define _XTAL_FREQ     (F_CPU)
+#define CPU_FREQ       (F_CPU)
 
 #endif // CONFIG_H_H

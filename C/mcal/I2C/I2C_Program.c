@@ -33,7 +33,7 @@ void I2C_MasterInit(uint32_t iSCL_Clock, uint8_t iMasterAddress)
     #endif
 
     /* Set I2C SCL clock rate */
-    TWBR = (uint8_t) ((F_CPU/iSCL_Clock)-16)/(2*I2C_PRESCALER);
+    TWBR = (uint8_t) ((CPU_FREQ/iSCL_Clock)-16)/(2*I2C_PRESCALER);
 
     /* Set Master Address */
     TWAR = iMasterAddress<<1;
