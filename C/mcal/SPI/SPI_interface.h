@@ -1,5 +1,5 @@
-#ifndef SPI_H   
-#define SPI_H   
+#ifndef SPI_H
+#define SPI_H
 
 #if IS_PIC
 
