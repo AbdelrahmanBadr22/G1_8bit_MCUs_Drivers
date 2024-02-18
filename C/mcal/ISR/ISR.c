@@ -78,7 +78,7 @@ void __vector_16(void)
             #else
                 kErrorState = kFunctionParameterError;
             #endif
-            ISRfunction();
+            //ISRfunction();
             CLR_BIT(ADCSRA_REG, ADCSRA_ADIE);
 }
 #elif IS_PIC()
