@@ -12,6 +12,9 @@
 #define GLOBAL_INTERRUPT_ENABLE   (1)
 #define GLOBAL_INTERRUPT_DISABLE  (0)
 
+//in AVR SREG_I BIT AND IN PIC INTCON_GIE
+#define GLOBAL_INTERRUPT_BIT      (7)
+
 /**
  * @brief  : This function is used to enable Global Interrupt
  *

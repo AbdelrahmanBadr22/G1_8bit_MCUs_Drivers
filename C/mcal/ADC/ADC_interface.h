@@ -50,6 +50,12 @@
 #define RCON_IPEN           (7)
 #define INTCON_PEIE         (6)
 #define INTCON_GIE          (7)
+
+#if IS_AVR()
+#define ADC_PRESCALER_REG   (ADCSRA_REG)
+#elif IS_PIC()
+#define ADC_PRESCALER_REG   (ADCON2_REG)
+#endif //IS_AVR()
 typedef enum
 {
     ADC_CHANNEL0,
@@ -70,7 +76,7 @@ typedef enum
 }ADC_Channel_t;
 
 
-error_t ADC_Init (void);
+void ADC_Init(void);
 void ADC_ENABLE(void);
 void ADC_DISABLE(void);
 void ADC_INTERRUPT_ENABLE(void);
