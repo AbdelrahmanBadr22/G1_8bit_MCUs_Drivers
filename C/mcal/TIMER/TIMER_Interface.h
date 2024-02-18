@@ -61,7 +61,6 @@
 #define TIMER1_INTERRUPT_OVERFLOW (0)
 #define TIMER1_INTERRUPT_CTCA     (1)
 #define TIMER1_INTERRUPT_CTCB     (2)
-#define TIMER1_INTERRUPT_ICU1     (3)
 
 
 /* Timer2 interrupt sources */
