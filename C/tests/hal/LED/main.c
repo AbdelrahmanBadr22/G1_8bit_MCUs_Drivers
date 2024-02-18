@@ -16,21 +16,21 @@ int main()
   while (1)
   {
     TEST_LedActiveHigh(&redLed);
-    _delay_ms(1000);
+    Delay_ms(1000);
     TEST_LedActiveLow(&greenLed);
   }
 }
 void TEST_LedActiveHigh(LED_t *pLed)
 {
   LED_TurnOn(pLed);
-  _delay_ms(1000);
+  Delay_ms(1000);
   LED_TurnOff(pLed);
-  _delay_ms(1000);
+  Delay_ms(1000);
 }
 void TEST_LedActiveLow(LED_t *pLed)
 {
   LED_TurnOn(pLed);
-  _delay_ms(1000);
+  Delay_ms(1000);
   LED_TurnOff(pLed);
-  _delay_ms(5000);
+  Delay_ms(5000);
 }

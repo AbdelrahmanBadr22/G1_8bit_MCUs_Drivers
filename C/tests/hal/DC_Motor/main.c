@@ -10,12 +10,12 @@ int main(void)
   while (1)
   {
       DcMotor_ClockWise(&dcMotor);
-      _delay_ms(2000);
+      Delay_ms(2000);
       DcMotor_Stop(&dcMotor);
-      _delay_ms(500);
+      Delay_ms(500);
       DcMotor_AntiClockWise(&dcMotor);
-      _delay_ms(2000);
+      Delay_ms(2000);
       DcMotor_Stop(&dcMotor);
-      _delay_ms(500);
+      Delay_ms(500);
   }
 }
