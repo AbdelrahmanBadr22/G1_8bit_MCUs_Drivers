@@ -5,7 +5,6 @@
 #include "../../../common/Registes.h"
 #include "../../../mcal/GPIO/GPIOPrivate.h"
 #include "../../../mcal/GPIO/GPIO.h"
-#include "../../../mcal/GIC/GIC_Private.h"
 #include "../../../mcal/GIC/GIC_Interface.h"
 #include "../../../mcal/EXTI/EXTI_Interface.h"
 int main()
