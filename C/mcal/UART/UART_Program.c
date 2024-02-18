@@ -127,7 +127,7 @@ error_t UART_Transmit(uint8_t data)
     #else
     #error "Unkown MCU"
     #endif
-    while (UART_GET_TRANSMIT_STATUS() == 0) 
+    while (UART_GET_TRANSMIT_STATUS() == 0)
     {
 
     }
