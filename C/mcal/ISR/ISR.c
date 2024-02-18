@@ -1,13 +1,16 @@
-#include "../../common/Types.h"
-#include "../../common/Utils.h"
-#include "../../common/Registes.h"
-#include "ISR_private.h"
+#include "Config.h"
+#include "Types.h"
+#include "Utils.h"
+#include "Registes.h"
+#include "EXTI_Interface.h"
+#include "ADC_interface.h"
 #include "ISR.h"
 
+uint16* aSynchResult;
 static void (*EXTI_pCallBackFun[3]) (void) = {NULL_PTR};
 static void (*ADC_pCallBackFun) (void) = NULL_PTR;
 
-#if MCU_TYPE == _PIC
+#if IS_PIC()
 static volatile INT0Flag=0, INT0IE=0;
 static volatile INT1Flag=0, INT1IE=0;
 static volatile INT2Flag=0, INT2IE=0;
@@ -33,7 +36,7 @@ error_t ISR_Init(uint8_t kInterruptSource, void (*pFun)(void))
     }
     return retErrorState;
 }
-#if MCU_TYPE ==_AVR
+#if IS_AVR()
 /* ISR Implementation   */
 /*ISR OF INT0*/
 void __vector_1(void) __attribute__((signal));
@@ -78,7 +81,7 @@ void __vector_16(void)
             ISRfunction();
             CLR_BIT(ADCSRA_REG, ADCSRA_ADIE);
 }
-#elif MCU_TYPE == _PIC
+#elif IS_PIC()
 #if priorityState == ENABLED
 void __interrupt(high_priority) ISR_HIGH(void)
 {

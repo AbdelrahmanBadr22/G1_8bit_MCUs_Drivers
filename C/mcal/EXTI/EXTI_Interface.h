@@ -16,14 +16,14 @@
 #define EXTI_FALLING_EDGE (4)
 #define EXTI_RISING_EDGE  (5)
 #define EXTI_LOW_LEVEL    (6)
-#define EXTI_ON_CHANGE   (7)
+#define EXTI_ON_CHANGE    (7)
 
-#if MCU_TYPE == _PIC
+#if IS_PIC()
     #define EXTI_HIGH_PRIORITY (8)
     #define EXTI_LOW_PRIORITY (9)
 #endif
 /*bits*/
-#if MCU_TYPE == _AVR
+#if IS_AVR()
     #define GICR_INT0     (6)
     #define GICR_INT1     (7)
     #define GICR_INT2     (5)
@@ -32,7 +32,7 @@
     #define MCUCR_ISC10   (2)
     #define MCUCR_ISC11   (3)
     #define MCUCSR_ISC2   (6)
-#elif MCU_TYPE == _PIC
+#elif IS_PIC()
     #define INTCON_GIE      (7)
     #define INTCON_GIEH     (7)
     #define INTCON_PEIE     (6)
@@ -94,7 +94,7 @@ error_t EXTI_SetSenseControl(uint8_t kInterruptSource, uint8_t kSenseControl);
  *                         if function  parameter is wrong
  */
 error_t EXTI_SetCallBackFun(uint8_t kInterruptSource, void (*pFun)(void));
-#if MCU_TYPE == _PIC
+#if IS_PIC()
 /**
  * @brief             : This function is used to set priority
  *
