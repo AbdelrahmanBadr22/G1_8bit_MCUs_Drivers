@@ -66,7 +66,7 @@ typedef enum
     ADC_CHANNEL5,
     ADC_CHANNEL6,
     ADC_CHANNEL7,
-    #if MCU_TYPE == _PIC
+    #if IS_PIC()
     ADC_CHANNEL8,
     ADC_CHANNEL9,
     ADC_CHANNEL10,

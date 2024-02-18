@@ -1,6 +1,6 @@
+#include "../../common/Config.h"
 #include "../../common/Types.h"
 #include "../../common/Utils.h"
-#include "../../common/Config.h"
 #include "../../common/Registes.h"
 #include "GPIOPrivate.h"
 #include "GPIO.h"
