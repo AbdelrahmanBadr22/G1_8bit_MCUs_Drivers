@@ -76,7 +76,7 @@ static void delay_timer_(uint16 ms_)
 void Delay_ms(const uint16 ms)
 {
     #if DELAY_METHOD == DELAY_BUILTIN
-    BUILTIN_DELAY_MS(1);
+    BUILTIN_DELAY_MS(ms);
     #elif DELAY_METHOD == DELAY_BUSYWAIT
     delay_busywait_(ms);
     #elif DELAY_METHOD == DELAY_TIMER
