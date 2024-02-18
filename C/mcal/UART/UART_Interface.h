@@ -2,6 +2,7 @@
 #define UART_H
 
 /*bits*/
+#if IS_PIC()
 #define TXSTA_TX9           (6)
 #define TXSTA_TXEN          (5)
 #define TXSTA_SYNC          (4)
@@ -26,7 +27,7 @@
 #define DATA_SIZE_7_BIT     (2)
 #define DATA_SIZE_8_BIT     (3)
 #define DATA_SIZE_9_BIT     (0)
-
+#elif IS_AVR()
 #define UDRE_UCSRA          (5)
 #define RXC_UCSRA           (7)
 #define UMSEL_UCSRC         (6)
@@ -39,6 +40,7 @@
 #define UCSZ1_UCSRC         (2)
 #define UCSZ2_UCSRB         (2)
 #define URSEL_UCSRC         (7)
+#endif
 
 error_t UART_Init(void);
 error_t UART_Transmit(uint8_t data);

@@ -162,7 +162,7 @@ void TIMER0_SetPreScalar()
     CLR_BIT(TCCR0, TCCR0_CS02);
     SET_BIT(TCCR0, TCCR0_CS01);
     SET_BIT(TCCR0, TCCR0_CS00);
-    #endif // IS_AVR
+    #endif // IS_AVR()
 }
 error_t TIMER1_Init(uint8_t kMode, uint8_t kClock)
 {

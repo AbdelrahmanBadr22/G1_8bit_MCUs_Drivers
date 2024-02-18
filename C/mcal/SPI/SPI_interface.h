@@ -1,7 +1,7 @@
 #ifndef SPI_H
 #define SPI_H
 
-#if IS_PIC
+#if IS_PIC()
 
 #define CLK_4               (0)
 #define CLK_16              (1)
@@ -36,7 +36,7 @@
 
 #define PIR1_SSPIF          (3)
 
-#elif IS_AVR
+#elif IS_AVR()
 
 #define LSB_FIRST           (0)
 #define MSB_FIRST           (1)
