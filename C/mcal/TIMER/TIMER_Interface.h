@@ -83,6 +83,7 @@
 #define PWM1_INVERTING     (0)
 #define PWM1_NON_INVERTING (1)
 /*bits*/
+#if IS_AVR()
 #define TCCR0_WGM00  (6) /* Waveform  Generation Mode 0 */
 #define TCCR0_WGM01  (3) /* Waveform  Generation Mode 1*/
 #define TCCR0_COMM01 (5) /* Compare Match Output Mode */
@@ -115,7 +116,7 @@
 #define TCCR2_COMM20 (4) /* Compare Match Output Mode */
 #define TIMSK_TOIE2  (6) /* Timer0 Overflow Interrupt Enable */
 #define TIMSK_OCIE2  (7) /* Output Compare Interrupt Enable */
-
+#endif
 
 #define RESOLUTION_8BIT  (255)
 #define RESOLUTION_10BIT (1023)
