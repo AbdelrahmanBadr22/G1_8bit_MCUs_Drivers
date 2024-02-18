@@ -16,7 +16,7 @@
 ///////////////// HELPER FUNCTIONS ////////////////////////////////////////////
 //-----------------------------------------------------------------------------
 #if IS_AVR()
-static error_t AVR_INTERRUPT_ENABLE_HELPER(uint8_t kInterruptSource, error_t kErrorState)
+static error_t AVR_INTERRUPT_ENABLE_HELPER(uint8_t kInterruptSource, error_t kErrorState) //IGNORE-STYLE-CHECK[L004]
 {
     switch (kInterruptSource)
     {
@@ -27,7 +27,7 @@ static error_t AVR_INTERRUPT_ENABLE_HELPER(uint8_t kInterruptSource, error_t kEr
     }
     return kErrorState;
 }
-static error_t AVR_INTERRUPT_DISABLE_HELPER(uint8_t kInterruptSource, error_t kErrorState)
+static error_t AVR_INTERRUPT_DISABLE_HELPER(uint8_t kInterruptSource, error_t kErrorState) //IGNORE-STYLE-CHECK[L004]
 {
     switch (kInterruptSource)
     {
@@ -111,7 +111,7 @@ static error_t AVR_EXTI_SET_SENSE_CONTROL_HELPER(uint8_t kInterruptSource, error
     return kErrorState;
 }
 #elif IS_PIC()
-static error_t PIC_INTERRUPT_ENABLE_HELPER(uint8_t kInterruptSource, error_t kErrorState)
+static error_t PIC_INTERRUPT_ENABLE_HELPER(uint8_t kInterruptSource, error_t kErrorState) //IGNORE-STYLE-CHECK[L004]
 {
     switch (kInterruptSource)
     {
@@ -143,7 +143,7 @@ static error_t PIC_INTERRUPT_ENABLE_HELPER(uint8_t kInterruptSource, error_t kEr
     }
     return kErrorState;
 }
-static error_t PIC_INTERRUPT_DISABLE_HELPER(uint8_t kInterruptSource, error_t kErrorState)
+static error_t PIC_INTERRUPT_DISABLE_HELPER(uint8_t kInterruptSource, error_t kErrorState) //IGNORE-STYLE-CHECK[L004]
 {
     switch (kInterruptSource)
     {
@@ -190,7 +190,7 @@ static error_t PIC_EXTI_SET_SENSE_CONTROL_HELPER(uint8_t kInterruptSource, error
     return kErrorState;
 }
 static error_t PIC_EXTI_SET_PRIORITY_HELPER(uint8_t kInterruptSource,
-                        uint8_t kInterruptPriority, uint8_t kPriorityLevel, error_t kErrorState)
+                        uint8_t kInterruptPriority, uint8_t kPriorityLevel, error_t kErrorState) //IGNORE-STYLE-CHECK[L004]
 {
     priorityState = kInterruptPriority;
     if (kInterruptSource == EXTI_INT0)
@@ -278,8 +278,8 @@ error_t EXTI_InterruptEnable (uint8_t kInterruptSource)
 error_t EXTI_InterruptDisable(uint8_t kInterruptSource)
 {
     error_t kErrorState = kNoError;
-    #if IS_AVR()       
-    kErrorState = AVR_INTERRUPT_DISABLE_HELPER(kInterruptSource, kErrorState);  
+    #if IS_AVR()
+    kErrorState = AVR_INTERRUPT_DISABLE_HELPER(kInterruptSource, kErrorState);
     #elif IS_PIC()
     kErrorState = PIC_INTERRUPT_DISABLE_HELPER(kInterruptSource, kErrorState);
     #else
@@ -291,9 +291,9 @@ error_t EXTI_SetSenseControl (uint8_t kInterruptSource,  uint8_t kSenseControl)
 {
     error_t kErrorState = kNoError;
     #if IS_AVR()
-    kErrorState = AVR_EXTI_SET_SENSE_CONTROL_HELPER(kInterruptSource, kErrorState, kSenseControl);
+    kErrorState = AVR_EXTI_SET_SENSE_CONTROL_HELPER(kInterruptSource, kErrorState, kSenseControl); //IGNORE-STYLE-CHECK[L004]
     #elif IS_PIC()
-    kErrorState = PIC_EXTI_SET_SENSE_CONTROL_HELPER(kInterruptSource, kErrorState, kSenseControl);
+    kErrorState = PIC_EXTI_SET_SENSE_CONTROL_HELPER(kInterruptSource, kErrorState, kSenseControl); //IGNORE-STYLE-CHECK[L004]
     #else
     #error "Unkown MCU"
     #endif
