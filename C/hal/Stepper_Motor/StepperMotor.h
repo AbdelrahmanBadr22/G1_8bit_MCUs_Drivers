@@ -29,7 +29,8 @@ error_t Stepper_Init(StepperMotor_t * pStepper);
  *                      2-STEPPER_HALFSTEP
  * @return error_t  Return 0 if pStepper is Pointer to NULL
  */
-void Stepper_ClockWise(StepperMotor_t* pStepper, uint8_t type, uint8_t degree);
+error_t Stepper_ClockWise(StepperMotor_t* pStepper,
+                          uint8_t type, uint8_t degree);
 /**
  * @brief This Function is Make Motor Return AntiClockWise
  * @param pStepper Pointer to Motor
@@ -37,7 +38,7 @@ void Stepper_ClockWise(StepperMotor_t* pStepper, uint8_t type, uint8_t degree);
  *                      2-STEPPER_HALFSTEP
  * @return  error_t Return 0 if pStepper is Pointer to NULL
  */
-void Stepper_AntiClockWise(StepperMotor_t* pStepper,
+error_t Stepper_AntiClockWise(StepperMotor_t* pStepper,
                            uint8_t type, uint8_t degree);
 /**
  * @brief This Function is to TurnOff StepperMotor
@@ -45,8 +46,4 @@ void Stepper_AntiClockWise(StepperMotor_t* pStepper,
  * @return error_t Return 0 if pStepper  is Pointer to NULL
  */
 error_t Stepper_Stop(StepperMotor_t * pStepper);
-void ClockWiseFullStep(StepperMotor_t * pStepper);
-void ClockWiseHalfStep(StepperMotor_t * pStepper);
-void AntiClockWiseFullStep(StepperMotor_t * pStepper);
-void AntiClockWiseHalfStep(StepperMotor_t * pStepper);
 #endif
