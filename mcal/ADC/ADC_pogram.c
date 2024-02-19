@@ -1,13 +1,12 @@
-#include "../../common/Config.h"
-#include "../../common/Types.h"
-#include "../../common/Utils.h"
-#include "../../common/Registes.h"
-#include "../ISR/ISR_private.h"
-#include "../ISR/ISR.h"
+#include "Config.h"
+#include "Types.h"
+#include "Utils.h"
+#include "Registes.h"
+#include "ISR.h"
 #include "ADC_config.h"
 #include "ADC_interface.h"
 
-static uint16* aSynchResult;
+uint16* aSynchResult;
 //-----------------------------------------------------------------------------
 //                           HELPER FUNCTIONS
 //-----------------------------------------------------------------------------
@@ -53,10 +52,10 @@ static void ADC_PIC_CONFIG_HELPER()
 
     /* Select ADC Right/Left Adjust */
     #if ADC_ADJUSTMENT == LEFT_ADJUSTMENT
-    CLR_BIT(ADCON2_REG, ADCON2_ADFM);
-      #elif ADC_ADJUSTMENT == RIGHT_ADJUSTMENT
+      CLR_BIT(ADCON2_REG, ADCON2_ADFM);
+    #elif ADC_ADJUSTMENT == RIGHT_ADJUSTMENT
       SET_BIT(ADCON2_REG, ADCON2_ADFM);
-        #endif //ADC_ADJUSTMENT == LEFT_ADJUSTMENT
+    #endif //ADC_ADJUSTMENT == LEFT_ADJUSTMENT
 }
 #endif //IS_AVR()
 //-----------------------------------------------------------------------------
@@ -115,8 +114,13 @@ error_t  ADC_Prescaler (uint8_t prescalerVal)
     error_t kErrorState = kNoError;
     if (prescalerVal<ADC_PRESCALER_128)
     {
-       ADC_PRESCALER_REG &=ADC_PRE_MASK;
-       ADC_PRESCALER_REG |=prescalerVal;
+        #if IS_AVR()
+        ADCSRA_REG&=ADC_PRE_MASK;
+        ADCSRA_REG|=prescalerVal;
+        #elif IS_PIC()
+        ADCON2_REG &= ADC_PRE_MASK;
+        ADCON2_REG |= prescalerVal;
+        #endif // IS_AVR()
     }
     else
     {
@@ -129,17 +133,6 @@ error_t ADC_GetResultSynch(uint8_t channel, uint16* result)
     error_t kErrorState = kNoError;
     if (result!=NULL)
     {
-         #if IS_AVR()
-         #define ADC_START_CONVERSION()  (SET_BIT(ADCSRA_REG, ADCSRA_ADSC))
-         #define ADC_CHECK_FLAG()        ((GET_BIT(ADCSRA_REG, ADCSRA_ADIF)==0))
-         # define ADC_Clear_Interrupt_Flag() (SET_BIT(ADCSRA_REG, ADCSRA_ADIF))
-         #elif IS_PIC()
-         #define ADC_START_CONVERSION()  (SET_BIT(ADCON0_REG, ADCON0_GODONE))
-         #define ADC_CHECK_FLAG()  ((GET_BIT(ADCON0_REG, ADCON0_GODONE) == 1)
-                                     && (GET_BIT(PIR1_REG, PIR1_ADIF) == 0))
-         define ADC_Clear_Interrupt_Flag() ( CLR_BIT(PIR1_REG, PIR1_ADIF))
-         #endif
-
         /* Select Channel */
         ADC_CHANNEL_REG &=ADC_CH_MASK;
         ADC_CHANNEL_REG |=channel;
@@ -180,20 +173,15 @@ error_t ADC_StartConvASynch(uint8_t channel, uint16* result,
     error_t kErrorState = kNoError;
     if (result!=NULL)
     {
-        #if IS_AVR()
         aSynchResult=result;
         ISR_Init(ADC_INT, function);
-        ADMUX_REG &=ADC_CH_MASK;
-        ADMUX_REG =channel;
-        SET_BIT(ADCSRA_REG, ADCSRA_ADSC);
+        ADC_CHANNEL_REG &=ADC_CH_MASK;
+        ADC_CHANNEL_REG |=channel;
+        /* Start Conversion */
+        ADC_START_CONVERSION();
+        #if IS_AVR()
         ADC_INTERRUPT_ENABLE();
         #elif IS_PIC()
-        aSynchResult = result;
-        ISR_Init(ADC_INT, function);
-        ADCON0_REG &= 0b11000011;
-        ADCON0_REG |= channel;
-        /* Start Conversion */
-        SET_BIT(ADCON0_REG, ADCON0_GODONE);
         /*Enable Interrupt*/
         //Clear ADC interrupt flag
         CLR_BIT(PIR1_REG, PIR1_ADIF);
