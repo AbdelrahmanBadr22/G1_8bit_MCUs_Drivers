@@ -5,10 +5,10 @@
  * @version:0.1
  * @date   :2023-08-16
  */
-#include "../../common/Config.h"
-#include "../../common/Types.h"
-#include "../../common/Registes.h"
-#include "../../common/Utils.h"
+#include "Config.h"
+#include "Types.h"
+#include "Registes.h"
+#include "Utils.h"
 #include "GIC_Interface.h"
 
 error_t GIC_voidGlobalInterruptControl(uint8_t copyControl)

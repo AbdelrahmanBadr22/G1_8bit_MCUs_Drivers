@@ -1,7 +1,7 @@
-#include "../../common/Config.h"
-#include "../../common/Types.h"
-#include "../../common/Utils.h"
-#include "../../common/Registes.h"
+#include "Config.h"
+#include "Types.h"
+#include "Utils.h"
+#include "Registes.h"
 #include "GPIOPrivate.h"
 #include "GPIO.h"
 

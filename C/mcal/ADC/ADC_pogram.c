@@ -1,12 +1,12 @@
-#include "../../common/Config.h"
-#include "../../common/Types.h"
-#include "../../common/Utils.h"
-#include "../../common/Registes.h"
-#include "../ISR/ISR.h"
+#include "Config.h"
+#include "Types.h"
+#include "Utils.h"
+#include "Registes.h"
+#include "ISR.h"
 #include "ADC_config.h"
 #include "ADC_interface.h"
 
-static uint16* aSynchResult;
+uint16* aSynchResult;
 //-----------------------------------------------------------------------------
 //                           HELPER FUNCTIONS
 //-----------------------------------------------------------------------------
@@ -52,10 +52,10 @@ static void ADC_PIC_CONFIG_HELPER()
 
     /* Select ADC Right/Left Adjust */
     #if ADC_ADJUSTMENT == LEFT_ADJUSTMENT
-    CLR_BIT(ADCON2_REG, ADCON2_ADFM);
-      #elif ADC_ADJUSTMENT == RIGHT_ADJUSTMENT
+      CLR_BIT(ADCON2_REG, ADCON2_ADFM);
+    #elif ADC_ADJUSTMENT == RIGHT_ADJUSTMENT
       SET_BIT(ADCON2_REG, ADCON2_ADFM);
-        #endif //ADC_ADJUSTMENT == LEFT_ADJUSTMENT
+    #endif //ADC_ADJUSTMENT == LEFT_ADJUSTMENT
 }
 #endif //IS_AVR()
 //-----------------------------------------------------------------------------
@@ -163,7 +163,7 @@ error_t ADC_GetResultSynch(uint8_t channel, uint16* result)
 
             #else
                 kErrorState = kFunctionParameterError;
-            #endif
+            #endif //ADC_ADJUSTMENT == RIGHT_ADJUSTMENT
         }
         #elif IS_PIC()
         /* Select Channel */
@@ -189,7 +189,7 @@ error_t ADC_GetResultSynch(uint8_t channel, uint16* result)
 
         #else
             kErrorState = kFunctionParameterError;
-        #endif
+        #endif //ADC_ADJUSTMENT == RIGHT_ADJUSTMENT
         #endif // IS_AVR()
     }
     else

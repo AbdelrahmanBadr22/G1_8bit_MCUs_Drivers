@@ -6,16 +6,19 @@
  * @date 2023-12-07
  */
 
-#include "../../common/Config.h"
-#include "../../common/Types.h"
-#include "../../common/Registes.h"
-#include "../../common/Utils.h"
-#include "I2C_Interface.h"
+#include "Config.h"
+#include "Types.h"
+#include "Registes.h"
+#include "Utils.h"
 #include "I2C_Config.h"
+#include "I2C_Interface.h"
 
-void I2C_MasterInit(uint32_t iSCL_Clock, uint8_t iMasterAddress)
+//-----------------------------------------------------------------------------
+//                           HELPER FUNCTIONS
+//-----------------------------------------------------------------------------
+#if IS_AVR()
+static void AVR_SET_PRESCALER()
 {
-    #if IS_AVR()
     /* Set Prescaler */
     #if I2C_PRESCALER == I2C_PRESCALER_1
         CLR_BIT(TWSR, TWSR_TWPS0);
@@ -30,6 +33,15 @@ void I2C_MasterInit(uint32_t iSCL_Clock, uint8_t iMasterAddress)
         SET_BIT(TWSR, TWSR_TWPS0);
         SET_BIT(TWSR, TWSR_TWPS1);
     #endif
+}
+#endif //IS_AVR()
+//-----------------------------------------------------------------------------
+//                           I2C FUNCTIONS
+//-----------------------------------------------------------------------------
+void I2C_MasterInit(uint32_t iSCL_Clock, uint8_t iMasterAddress)
+{
+    #if IS_AVR()
+    AVR_SET_PRESCALER();
 
     /* Set I2C SCL clock rate */
     TWBR = (uint8_t) ((CPU_FREQ/iSCL_Clock)-16)/(2*I2C_PRESCALER);

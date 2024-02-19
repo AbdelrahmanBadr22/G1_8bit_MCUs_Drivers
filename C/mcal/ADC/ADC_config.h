@@ -37,7 +37,7 @@
             ADC_POSITIVE_SUP
             ADC_NEGATIVE_SUP
 */
-#if MCU_TYPE == _PIC
+#if IS_PIC()
 #define ADC_SUP (ADC_NEGATIVE_SUP)
 #if ADV_SUP != ADC_POSITIVE_SUP
 #if ADC_SUP != ADC_NEGATIVE_SUP
@@ -65,7 +65,7 @@
             ADC_PRESCALER_16
             ADC_PRESCALER_32
             ADC_PRESCALER_64
-            if MCU_TYPE == _AVR
+            if IS_AVR()
             ADC_PRESCALER_128
  */
 #define ADC_PRESCALER (ADC_PRESCALER_128)
