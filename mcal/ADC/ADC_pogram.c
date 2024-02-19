@@ -135,8 +135,8 @@ error_t ADC_GetResultSynch(uint8_t channel, uint16* result)
          # define ADC_Clear_Interrupt_Flag() (SET_BIT(ADCSRA_REG, ADCSRA_ADIF))
          #elif IS_PIC()
          #define ADC_START_CONVERSION()  (SET_BIT(ADCON0_REG, ADCON0_GODONE))
-         #define ADC_CHECK_FLAG()        ((GET_BIT(ADCON0_REG, ADCON0_GODONE) == 1)
-                                          && (GET_BIT(PIR1_REG, PIR1_ADIF) == 0))
+         #define ADC_CHECK_FLAG()  ((GET_BIT(ADCON0_REG, ADCON0_GODONE) == 1)
+                                     && (GET_BIT(PIR1_REG, PIR1_ADIF) == 0))
          define ADC_Clear_Interrupt_Flag() ( CLR_BIT(PIR1_REG, PIR1_ADIF))
          #endif
 
@@ -145,8 +145,8 @@ error_t ADC_GetResultSynch(uint8_t channel, uint16* result)
         ADC_CHANNEL_REG |=channel;
 
         /* Start Conversion */
-         START_CONVERSION() ;
-         
+        ADC_START_CONVERSION();
+
         uint8_t timer=0;
         while ( ADC_CHECK_FLAG()&&(timer<TIMEOUT))
         {
@@ -157,7 +157,7 @@ error_t ADC_GetResultSynch(uint8_t channel, uint16* result)
             kErrorState =kTimeoutError;
         }
         else
-        { 
+        {
             /* Clear ADC Interrupt Flag */
             ADC_Clear_Interrupt_Flag();
 
