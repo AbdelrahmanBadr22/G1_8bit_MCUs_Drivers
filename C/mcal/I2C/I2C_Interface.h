@@ -9,7 +9,7 @@
 #ifndef MCAL_I2C_I2C_INTERFACE_H_
 #define MCAL_I2C_I2C_INTERFACE_H_
 
-
+#if IS_AVR()
 /* BIT Macros */
 #define TWCR_TWINT (7) /* TWI Interrupt Flag */
 #define TWCR_TWEA  (6) /* TWI Enable Acknowledge Bit */
@@ -54,6 +54,38 @@
 /* Data byte has been received ACK has been returned */
 #define SLAVE_READ_BYTE_ACK                   (0x80)
 
+#elif IS_PIC()
+/* BIT Macros */
+#define SSPSTAT_SMP       (7)
+#define SSPSTAT_CKE       (6)
+#define SSPSTAT_P         (4)
+#define SSPSTAT_S         (3)
+#define SSPSTAT_BF        (0)
+
+#define SSPCON1_WCOL      (7)
+#define SSPCON1_SSPOV     (6)
+#define SSPCON1_SSPEN     (5)
+#define SSPCON1_CKP       (4)
+
+#define SSPCON2_GCEN          (7)
+#define SSPCON2_ACKSTAT       (6)
+#define SSPCON2_ACKDT         (5)
+#define SSPCON2_ACKEN         (4)
+#define SSPCON2_RCEN          (3)
+#define SSPCON2_PEN           (2)
+#define SSPCON2_RSEN          (1)
+#define SSPCON2_SEN           (0)
+
+#define PIR1_SSPIF        (3)
+/* Modes */
+#define MASTER_MODE         (0)
+#define FIRMWARE_MODE       (1)   /*Slave Idle*/
+#define SLAVE_7BITS_MODE    (2)
+#define SLAVE_10BITS_MODE   (3)
+/*Slew Rate*/
+#define STANDARD_SPEED_100K_1M (1)
+#define HIGH_SPEED_400k        (2)
+#endif
 /**
  * @brief I2C Error Types
  *
@@ -69,6 +101,7 @@ typedef enum
     MasterReadByteError,
     SlaveWriteByteError,
     SlaveReadByteError,
+    ModeError,
     I2C_NoError
 }i2c_error_t;
 
@@ -76,22 +109,22 @@ typedef enum
  * @brief This function is Used to Initialize I2C in Master Mode
  *
  * @param iSCL_Clock     I2C SLC Clock Rate [MAX: 400kHz --> Fast Mode Speed]
- * @param iMasterAddress Address of the master 7 Bits [1 --> 120]
+ * @param iMasterCfg     AVR: Address of the master 7 Bits [1 --> 120]
  *                          Note that : Addresses  0 & [121-->127] are reserved
- *
+ *                       PIC: Set Mode OPTIONS: MASTER_MODE OR FIRMWARE_MODE
  * @return None
  */
-void I2C_MasterInit(uint32_t iSCL_Clock, uint8_t iMasterAddress);
+void I2C_MasterInit(uint32_t iSCL_Clock, uint8_t iMasterCfg);
 
 /**
  * @brief This function is Used to Initialize I2C in Slave Mode
  *
  * @param iSlaveAddress Address of the Slave 7 Bits [1 --> 120]
  *                          Note that : Addresses  0 & [121-->127] are reserved
- *
+ *@param iSlaveMode PIC: Set Mode OPTIONS: SLAVE_7BITS_MODE OR SLAVE_10BITS_MODE
  * @return None
  */
-void I2C_SlaveInit(uint8_t iSlaveAddress);
+void I2C_SlaveInit(uint8_t iSlaveAddress, uint8_t iSlaveMode);
 
 /**
  * @brief This function is used to send a start condition to the slave
