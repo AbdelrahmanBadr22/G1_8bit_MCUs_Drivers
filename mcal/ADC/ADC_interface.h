@@ -42,6 +42,7 @@
 #elif IS_PIC()
 #define ADC_CH_MASK (0b11000011)
 #endif
+
 #define ADC_PRESCALER_2    (1)
 #define ADC_PRESCALER_4    (2)
 #define ADC_PRESCALER_8    (3)
@@ -65,6 +66,17 @@
 #define ADC_DATA_L_REG      (ADRESL_REG)
 #define ADC_DATA_H_REG      (ADRESH_REG)
 #endif //IS_AVR()
+
+#if IS_AVR()
+#define ADC_START_CONVERSION()  (SET_BIT(ADCSRA_REG, ADCSRA_ADSC))
+#define ADC_CHECK_FLAG()        ((GET_BIT(ADCSRA_REG, ADCSRA_ADIF)==0))
+# define ADC_Clear_Interrupt_Flag() (SET_BIT(ADCSRA_REG, ADCSRA_ADIF))
+#elif IS_PIC()
+#define ADC_START_CONVERSION()  (SET_BIT(ADCON0_REG, ADCON0_GODONE))
+#define ADC_CHECK_FLAG()  ((GET_BIT(ADCON0_REG, ADCON0_GODONE) == 1)
+                          && (GET_BIT(PIR1_REG, PIR1_ADIF) == 0))
+#define ADC_Clear_Interrupt_Flag() ( CLR_BIT(PIR1_REG, PIR1_ADIF))
+#endif//IS_AVR()
 typedef enum
 {
     ADC_CHANNEL0,

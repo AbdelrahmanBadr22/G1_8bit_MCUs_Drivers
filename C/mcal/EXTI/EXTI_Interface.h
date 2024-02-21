@@ -49,7 +49,7 @@
     #define INTCON2_INTEDG1 (5)
     #define INTCON2_INTEDG2 (4)
     #define RCON_IPEN       (7)
-#endif //IS_AVR()
+#endif
 
 error_t EXTI_InterruptEnable (uint8_t kInterruptSource);
 /**
