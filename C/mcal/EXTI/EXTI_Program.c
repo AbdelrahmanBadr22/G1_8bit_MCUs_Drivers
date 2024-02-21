@@ -10,11 +10,6 @@
 #include "Utils.h"
 #include "Registes.h"
 #include "ISR.h"
-#include "Config.h"
-#include "Types.h"
-#include "Utils.h"
-#include "Registes.h"
-#include "ISR.h"
 #include "EXTI_Interface.h"
 
 //-----------------------------------------------------------------------------
@@ -30,22 +25,8 @@ static error_t AVR_INTERRUPT_ENABLE_HELPER(uint8_t kInterruptSource, error_t kEr
         case EXTI_INT2 : SET_BIT(GICR_REG,  GICR_INT2); break;
         default: kErrorState = kFunctionParameterError;
     }
-//-----------------------------------------------------------------------------
-///////////////// HELPER FUNCTIONS ////////////////////////////////////////////
-//-----------------------------------------------------------------------------
-#if IS_AVR()
-static error_t AVR_INTERRUPT_ENABLE_HELPER(uint8_t kInterruptSource, error_t kErrorState) //IGNORE-STYLE-CHECK[L004]
-{
-    switch (kInterruptSource)
-    {
-        case EXTI_INT0 : SET_BIT(GICR_REG,  GICR_INT0); break;
-        case EXTI_INT1 : SET_BIT(GICR_REG,  GICR_INT1); break;
-        case EXTI_INT2 : SET_BIT(GICR_REG,  GICR_INT2); break;
-        default: kErrorState = kFunctionParameterError;
-    }
     return kErrorState;
 }
-static error_t AVR_INTERRUPT_DISABLE_HELPER(uint8_t kInterruptSource, error_t kErrorState) //IGNORE-STYLE-CHECK[L004]
 static error_t AVR_INTERRUPT_DISABLE_HELPER(uint8_t kInterruptSource, error_t kErrorState) //IGNORE-STYLE-CHECK[L004]
 {
     switch (kInterruptSource)
@@ -55,16 +36,8 @@ static error_t AVR_INTERRUPT_DISABLE_HELPER(uint8_t kInterruptSource, error_t kE
         case EXTI_INT2 : CLR_BIT(GICR_REG,  GICR_INT2); break;
         default: kErrorState = kFunctionParameterError;
     }
-    switch (kInterruptSource)
-    {
-        case EXTI_INT0 : CLR_BIT(GICR_REG,  GICR_INT0); break;
-        case EXTI_INT1 : CLR_BIT(GICR_REG,  GICR_INT1); break;
-        case EXTI_INT2 : CLR_BIT(GICR_REG,  GICR_INT2); break;
-        default: kErrorState = kFunctionParameterError;
-    }
     return kErrorState;
 }
-static error_t AVR_EXTI_SET_SENSE_CONTROL_HELPER(uint8_t kInterruptSource, error_t kErrorState,  uint8_t kSenseControl)//IGNORE-STYLE-CHECK[L004]
 static error_t AVR_EXTI_SET_SENSE_CONTROL_HELPER(uint8_t kInterruptSource, error_t kErrorState,  uint8_t kSenseControl)//IGNORE-STYLE-CHECK[L004]
 {
     if (kInterruptSource == EXTI_INT0  )
@@ -93,8 +66,6 @@ static error_t AVR_EXTI_SET_SENSE_CONTROL_HELPER(uint8_t kInterruptSource, error
 
             default: kErrorState = kFunctionParameterError;
         }
-    }
-    else if (kInterruptSource == EXTI_INT1  )
     }
     else if (kInterruptSource == EXTI_INT1  )
     {
@@ -134,59 +105,9 @@ static error_t AVR_EXTI_SET_SENSE_CONTROL_HELPER(uint8_t kInterruptSource, error
         }
     }
     else
-    }
-    else
     {
         kErrorState = kFunctionParameterError;
     }
-    return kErrorState;
-}
-#elif IS_PIC()
-static error_t PIC_INTERRUPT_ENABLE_HELPER(uint8_t kInterruptSource, error_t kErrorState) //IGNORE-STYLE-CHECK[L004]
-{
-    switch (kInterruptSource)
-    {
-        case EXTI_INT0:
-            /*Disable INT0*/
-            CLR_BIT(INTCON_REG,  INTCON_INT0IE);
-            /*Clear Flag*/
-            CLR_BIT(INTCON_REG,  INTCON_INT0IF);
-            /*Enable INT0*/
-            SET_BIT(INTCON_REG,  INTCON_INT0IE);
-        break;
-        case EXTI_INT1:
-            /*Disable INT1*/
-            CLR_BIT(INTCON3_REG,  INTCON3_INT1IE);
-            /*Clear Flag*/
-            CLR_BIT(INTCON3_REG,  INTCON3_INT1IF);
-            /*Enable INT1*/
-            SET_BIT(INTCON3_REG,  INTCON3_INT1IE);
-        break;
-        case EXTI_INT2:
-            /*Disable INT2*/
-            CLR_BIT(INTCON3_REG,  INTCON3_INT2IE);
-            /*Clear Flag*/
-            CLR_BIT(INTCON3_REG,  INTCON3_INT2IF);
-            /*Enable INT2*/
-            SET_BIT(INTCON3_REG,  INTCON3_INT2IE);
-        break;
-        default: kErrorState = kFunctionParameterError;
-    }
-    return kErrorState;
-}
-static error_t PIC_INTERRUPT_DISABLE_HELPER(uint8_t kInterruptSource, error_t kErrorState) //IGNORE-STYLE-CHECK[L004]
-{
-    switch (kInterruptSource)
-    {
-        case EXTI_INT0 : CLR_BIT(INTCON_REG,  INTCON_INT0IE); break;
-        case EXTI_INT1 : CLR_BIT(INTCON3_REG,  INTCON3_INT1IE); break;
-        case EXTI_INT2 : CLR_BIT(INTCON3_REG,  INTCON3_INT2IE); break;
-        default: kErrorState = kFunctionParameterError;
-    }
-    return kErrorState;
-}
-static error_t PIC_EXTI_SET_SENSE_CONTROL_HELPER(uint8_t kInterruptSource, error_t kErrorState,  uint8_t kSenseControl)//IGNORE-STYLE-CHECK[L004]
-{
     return kErrorState;
 }
 #elif IS_PIC()
@@ -268,9 +189,6 @@ static error_t PIC_EXTI_SET_SENSE_CONTROL_HELPER(uint8_t kInterruptSource, error
     }
     return kErrorState;
 }
-static error_t PIC_EXTI_SET_PRIORITY_HELPER(uint8_t kInterruptSource,
-                        uint8_t kInterruptPriority, uint8_t kPriorityLevel, error_t kErrorState) //IGNORE-STYLE-CHECK[L004]
-{
 static error_t PIC_EXTI_SET_PRIORITY_HELPER(uint8_t kInterruptSource,
                         uint8_t kInterruptPriority, uint8_t kPriorityLevel, error_t kErrorState) //IGNORE-STYLE-CHECK[L004]
 {

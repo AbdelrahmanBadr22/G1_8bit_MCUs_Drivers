@@ -1,12 +1,8 @@
-#include "../../common/Config.h"
-#include "../../common/Types.h"
-#include "../../mcal/GPIO/GPIO.h"
+#include "Config.h"
+#include "Types.h"
+#include "GPIO.h"
 #include "Keypad_config_only_one.h"
 #include "Keypad_only_one.h"
-
-#if MCU_TYPE==_AVR
-#include <util/delay.h>
-#endif
 
 uint8_t keypadButtons[Keypad_numberOfRows]
                      [Keypad_numberOfCols] = {{'7', '8', '9', '/'},

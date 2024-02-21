@@ -1,6 +1,6 @@
-#include "../../common/Types.h"
-#include "../../mcal/GPIO/GPIO.h"
-#include "../../utils/delay/Delay.h"
+#include "Types.h"
+#include "GPIO.h"
+#include "Delay.h"
 #include "StepperMotor.h"
 
 //-----------------------------------------------------------------------------
