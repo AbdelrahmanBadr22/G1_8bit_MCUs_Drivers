@@ -1,5 +1,6 @@
-#include "../../common/Types.h"
-#include "../../mcal/GPIO/GPIO.h"
+#include "Config.h"
+#include "Types.h"
+#include "GPIO.h"
 #include "Keypad.h"
 
 
@@ -11,14 +12,14 @@ error_t Keypad_Initiate(keypad_t * pKeypad)
         uint8_t i;
         /*--------Set Rows Pin as Pullup Pin if AVR-------------*/
         #if MCU_TYPE == _AVR
-        for (i = 0; i < Keypad_numberOfRows; i++)
+        for (i = 0; i < pKeypad->numOfRow; i++)
         {
             GPIO_SetPinPullup(pKeypad->Keypad_RowArr[i].port,
                               pKeypad->Keypad_RowArr[i].pin);
         }
         /*--------Set Rows Pin as input  Pin if PIC-------------*/
         #elif MCU_TYPE == _PIC
-        for (i = 0; i < Keypad_numberOfRows; i++)
+        for (i = 0; i < pKeypad->numOfRow; i++)
         {
             GPIO_SetPinDirection(pKeypad->Keypad_RowArr[i].port,
                               pKeypad->Keypad_RowArr[i].pin);

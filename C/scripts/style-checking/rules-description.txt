@@ -1,0 +1,32 @@
+T016 # Calls to min/max should be protected against accidental macro substitution
+L004 # Line cannot be too long
+T011 # Curly brackets from the same pair should be either in the same line or in the same column
+B004 # Check if the variables : (1) Doesn't contain underscores   (2) begin with lowercase
+T019 # control structures should have complete curly-braced block of code
+F001 # Source files should not use the '\r' (CR) character
+L001 # No trailing whitespace
+T015 # HTML links in comments and string literals should be correct
+T013 # Source files should contain the copyright notice
+L002 # Don't use tab characters
+T002 # Reserved names should not be used for preprocessor macros
+L005 # There should not be too many consecutive empty lines
+T007 # Semicolons should not be isolated by spaces or comments from the rest of the code
+T009 # Comma should not be preceded by whitespace, but should be followed by one
+T012 # Negation operator should not be used in its short form
+B001 # All user defined data types must be ended with `_t`
+T001 # One-line comments should not have forced continuation
+T017 # Unnamed namespaces are not allowed in header files
+T010 # Identifiers should not be composed of 'l' and 'O' characters only
+L006 # Source file should not be too long
+T018 # using namespace are not allowed in header files
+T003 # Some keywords should be followed by a single space
+B003 # We have to use std types such as uint16_t, int32_t, ..
+T004 # Some keywords should be immediately followed by a colon
+F002 # File names should be well-formed
+L003 # No leading and no trailing empty lines
+DUMP foreach f [getSourceFileNames] {
+T006 # Keywords return and throw should be immediately followed by a semicolon or a single space
+B002 # All defined macros should be upper case and value is surrounded by parentheses
+T005 # Keywords break and continue should be immediately followed by a semicolon
+T014 # Source files should refer the Boost Software License
+T008 # Keywords catch, for, if and while should be followed by a single space

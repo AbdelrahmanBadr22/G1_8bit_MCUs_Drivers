@@ -133,16 +133,15 @@ error_t ADC_GetResultSynch(uint8_t channel, uint16* result)
     error_t kErrorState = kNoError;
     if (result!=NULL)
     {
-        #if IS_AVR()
         /* Select Channel */
-        ADMUX_REG &=ADC_CH_MASK;
-        ADMUX_REG |=channel;
+        ADC_CHANNEL_REG &=ADC_CH_MASK;
+        ADC_CHANNEL_REG |=channel;
 
         /* Start Conversion */
-        SET_BIT(ADCSRA_REG, ADCSRA_ADSC);
+        ADC_START_CONVERSION();
 
         uint8_t timer=0;
-        while ((GET_BIT(ADCSRA_REG, ADCSRA_ADIF)==0)&&(timer<TIMEOUT))
+        while ( ADC_CHECK_FLAG()&&(timer<TIMEOUT))
         {
             timer++;
         }
@@ -153,44 +152,14 @@ error_t ADC_GetResultSynch(uint8_t channel, uint16* result)
         else
         {
             /* Clear ADC Interrupt Flag */
-            SET_BIT(ADCSRA_REG, ADCSRA_ADIF);
+            ADC_Clear_Interrupt_Flag();
 
             #if ADC_ADJUSTMENT == RIGHT_ADJUSTMENT
-                *result = ADCL_REG | (ADCH_REG<<8);
-
+                *result = ADC_DATA_L_REG | (ADC_DATA_H_REG<<8);
             #elif ADC_ADJUSTMENT == LEFT_ADJUSTMENT
-                *result = (ADCL_REG>>6) | (ADCH_REG<<2);
-
-            #else
-                kErrorState = kFunctionParameterError;
-            #endif //ADC_ADJUSTMENT == RIGHT_ADJUSTMENT
+                *result = (ADC_DATA_L_REG>>6) | (ADC_DATA_H_REG<<2);
+            #endif
         }
-        #elif IS_PIC()
-        /* Select Channel */
-        ADCON0_REG &= 0b11000011;
-        ADCON0_REG |= channel;
-
-        /* Start Conversion */
-        SET_BIT(ADCON0_REG, ADCON0_GODONE);
-
-        while ((GET_BIT(ADCON0_REG, ADCON0_GODONE) == 1)
-            && (GET_BIT(PIR1_REG, PIR1_ADIF) == 0))
-        {
-
-        }
-        /* Clear ADC Interrupt Flag */
-        CLR_BIT(PIR1_REG, PIR1_ADIF);
-
-        #if ADC_ADJUSTMENT == RIGHT_ADJUSTMENT
-            *result = ADRESL_REG | (ADRESH_REG<<8);
-
-        #elif ADC_ADJUSTMENT == LEFT_ADJUSTMENT
-            *result = (ADRESH_REG>>6) | (ADRESL_REG<<2);
-
-        #else
-            kErrorState = kFunctionParameterError;
-        #endif //ADC_ADJUSTMENT == RIGHT_ADJUSTMENT
-        #endif // IS_AVR()
     }
     else
     {
@@ -204,20 +173,15 @@ error_t ADC_StartConvASynch(uint8_t channel, uint16* result,
     error_t kErrorState = kNoError;
     if (result!=NULL)
     {
-        #if IS_AVR()
         aSynchResult=result;
         ISR_Init(ADC_INT, function);
-        ADMUX_REG &=ADC_CH_MASK;
-        ADMUX_REG =channel;
-        SET_BIT(ADCSRA_REG, ADCSRA_ADSC);
+        ADC_CHANNEL_REG &=ADC_CH_MASK;
+        ADC_CHANNEL_REG |=channel;
+        /* Start Conversion */
+        ADC_START_CONVERSION();
+        #if IS_AVR()
         ADC_INTERRUPT_ENABLE();
         #elif IS_PIC()
-        aSynchResult = result;
-        ISR_Init(ADC_INT, function);
-        ADCON0_REG &= 0b11000011;
-        ADCON0_REG |= channel;
-        /* Start Conversion */
-        SET_BIT(ADCON0_REG, ADCON0_GODONE);
         /*Enable Interrupt*/
         //Clear ADC interrupt flag
         CLR_BIT(PIR1_REG, PIR1_ADIF);

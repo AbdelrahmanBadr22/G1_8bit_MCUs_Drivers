@@ -5,6 +5,7 @@
         "lcd_interface.h": "c",
         "gpio.h": "c",
         "types.h": "c",
-        "calculator.h": "c"
+        "calculator.h": "c",
+        "utils.h": "c"
     }
 }
