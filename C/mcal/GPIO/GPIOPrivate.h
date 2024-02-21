@@ -3,7 +3,7 @@
 
 
 #define GPIO_LAST_PIN        (kPIN7)
-#if IS_AVR()
+#if MCU_TYPE == _AVR
 /* ----------- DEFINE SOME HELPER FUNCTION SPECIFIC FOR _AVR ------------ */
 #define SET_DIR_OUTPUT(_Reg, _BitNum)  SET_BIT(_Reg, _BitNum)
 #define SET_DIR_INPUT(_Reg, _BitNum)   CLR_BIT(_Reg, _BitNum)
@@ -23,7 +23,7 @@
 #define GPIOD_OUT_REG        (PORTD_REG)
 #define GPIO_LAST_REG        (kPORTD)
 
-#elif IS_PIC()
+#elif MCU_TYPE == _PIC
 
 /* ----------- DEFINE SOME HELPER FUNCTION SPECIFIC FOR _PIC ---------- */
 #define SET_DIR_OUTPUT(_Reg, _BitNum)  CLR_BIT(_Reg, _BitNum)
