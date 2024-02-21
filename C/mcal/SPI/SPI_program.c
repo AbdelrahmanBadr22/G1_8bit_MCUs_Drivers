@@ -1,14 +1,15 @@
-#include "Config.h"
-#include "Types.h"
-#include "Utils.h"
-#include "Registes.h"
+#include "../../common/Config.h"
+#include "../../common/Types.h"
+#include "../../common/Utils.h"
+#include "../../common/Registes.h"
+#include "SPI_private.h"
 #include "SPI_config.h"
 #include "SPI_interface.h"
 
 //-----------------------------------------------------------------------------
 ///////////////// HELPER FUNCTIONS ////////////////////////////////////////////
 //-----------------------------------------------------------------------------
-#if IS_PIC()
+#if MCU_TYPE == _PIC
 static void PIC_CLK_MODE()
 {
         //Set SCK Rate To Fosc/4
@@ -36,11 +37,11 @@ static void PIC_CLK_MODE()
 }
 static void PIC_Config_Helper()
 {
-    #if IS_PIC()
+    #if MCU_TYPE == _PIC
     //Synchronous Serial Port Enable bit
     SET_BIT(SSPCON1_REG, SSPCON1_SSPEN);
     //SPI BUS MODES
-    #if SPI_MODE == MODE_1
+    #if SPI_MODE == MODE_1s
     CLR_BIT(SSPCON1_REG, SSPCON1_CKP);
     SET_BIT(SSPSTAT_REG, SSPSTAT_CKE);
     #elif SPI_MODE == MODE_2
@@ -68,7 +69,7 @@ static void PIC_Config_Helper()
 
 static void PIC_SPI_MASTER_Init()
 {
-    #if  IS_PIC()
+    #if  MCU_TYPE == _PIC
     //set SPI CLK MODE
     PIC_CLK_MODE();
     //set configuration
@@ -82,7 +83,7 @@ static void PIC_SPI_MASTER_Init()
 
 static void PIC_SPI_SLAVE_Init()
 {
-    #if IS_PIC()
+    #if MCU_TYPE == _PIC
     //SS pin control
     #if SPI_SS_MODE == ENABLE
     CLR_BIT(SSPCON1_REG, SSPCON1_SSMP0);
@@ -107,10 +108,10 @@ static void PIC_SPI_SLAVE_Init()
 }
 #endif
 
-#if IS_AVR()
+#if MCU_TYPE == _AVR
 static void AVR_Config_Helper()
 {
-    #if IS_AVR()
+    #if MCU_TYPE == _AVR
     //DATA ORDER
     #if SPI_DATA_ORDER == MSB_FIRST
         CLR_BIT(SPCR, SPCR_DORD);
@@ -150,7 +151,7 @@ static void AVR_Config_Helper()
 
 static void AVR_SPI_MASTER_Init()
 {
-    #if  IS_AVR()
+    #if  MCU_TYPE == _AVR
         //initialize it as master
         SET_BIT(SPCR, SPCR_MSTR);
         //set configuration
@@ -164,7 +165,7 @@ static void AVR_SPI_MASTER_Init()
 
 static void AVR_SPI_SLAVE_Init()
 {
-    #if  IS_AVR()
+    #if  MCU_TYPE == _AVR
     //initialize it as slave
     CLR_BIT(SPCR, SPCR_MSTR);
     //set configuration
@@ -179,9 +180,9 @@ static void AVR_SPI_SLAVE_Init()
 
 void SPI_MASTER_Init()
 {
-    #if IS_AVR()
+    #if MCU_TYPE == _AVR
     AVR_SPI_MASTER_Init();
-    #elif IS_PIC()
+    #elif MCU_TYPE == _PIC
     PIC_SPI_MASTER_Init();
     #else
     #error "Unkown MCU"
@@ -190,9 +191,9 @@ void SPI_MASTER_Init()
 
 void SPI_SLAVE_Init()
 {
-    #if IS_AVR()
+    #if MCU_TYPE == _AVR
     AVR_SPI_SLAVE_Init();
-    #elif IS_PIC()
+    #elif MCU_TYPE == _PIC
     PIC_SPI_SLAVE_Init();
     #else
     #error "Unkown MCU"
@@ -203,10 +204,10 @@ error_t SPI_Write(uint8_t data)
     error_t kErrorState = kNoError;
     uint8_t counter = 0;
 
-    #if IS_AVR()
+    #if MCU_TYPE == _AVR
       #define SPI_WRITE_REG                  (SPDR)
       #define SPI_GET_TRANSFER_STATUS()      (GET_BIT(SPSR, SPSR_SPIF))
-    #elif IS_PIC()
+    #elif MCU_TYPE == _PIC
       #define SPI_WRITE_REG                  (SSPBUF_REG)
       #define SPI_GET_TRANSFER_STATUS()      (GET_BIT(SSPSTAT_REG, SSPSTAT_BF))
     #else
@@ -233,10 +234,10 @@ error_t SPI_Read(uint8_t* data)
     error_t kErrorState = kNoError;
     uint16 counter = 0;
 
-    #if IS_AVR()
+    #if MCU_TYPE == _AVR
       #define SPI_WRITE_REG              (SPDR)
       #define SPI_GET_READ_STATUS_FINISHED()    (GET_BIT(SPSR, SPSR_SPIF) == 0)
-    #elif IS_PIC()
+    #elif MCU_TYPE == _PIC
       #define SPI_WRITE_REG            (SSPBUF_REG)
       #define SPI_GET_READ_STATUS_FINISHED()    (GET_BIT(SSPSTAT_REG, SSPSTAT_BF) == 1) && (GET_BIT(PIR1_REG, PIR1_SSPIF) == 1)  //IGNORE-STYLE-CHECK[L004]
     #else
@@ -255,7 +256,7 @@ error_t SPI_Read(uint8_t* data)
     {
         *data = SPI_WRITE_REG;
     }
-    #if IS_PIC()  // EXTRA STUFF SHOULD BE HANDLED FOR PIC
+    #if MCU_TYPE == _PIC  // EXTRA STUFF SHOULD BE HANDLED FOR PIC
     CLR_BIT(SSPSTAT_REG, SSPSTAT_BF);
     CLR_BIT(PIR1_REG, PIR1_SSPIF);
     #endif

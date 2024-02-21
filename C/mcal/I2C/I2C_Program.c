@@ -6,19 +6,17 @@
  * @date 2023-12-07
  */
 
-#include "Config.h"
-#include "Types.h"
-#include "Registes.h"
-#include "Utils.h"
-#include "I2C_Config.h"
+#include "../../common/Config.h"
+#include "../../common/Types.h"
+#include "../../common/Registes.h"
+#include "../../common/Utils.h"
 #include "I2C_Interface.h"
+#include "I2C_Private.h"
+#include "I2C_Config.h"
 
-//-----------------------------------------------------------------------------
-//                           HELPER FUNCTIONS
-//-----------------------------------------------------------------------------
-#if IS_AVR()
-static void AVR_SET_PRESCALER()
+void I2C_MasterInit(uint32_t iSCL_Clock, uint8_t iMasterAddress)
 {
+    #if MCU_TYPE == _AVR
     /* Set Prescaler */
     #if I2C_PRESCALER == I2C_PRESCALER_1
         CLR_BIT(TWSR, TWSR_TWPS0);
@@ -33,15 +31,6 @@ static void AVR_SET_PRESCALER()
         SET_BIT(TWSR, TWSR_TWPS0);
         SET_BIT(TWSR, TWSR_TWPS1);
     #endif
-}
-#endif //IS_AVR()
-//-----------------------------------------------------------------------------
-//                           I2C FUNCTIONS
-//-----------------------------------------------------------------------------
-void I2C_MasterInit(uint32_t iSCL_Clock, uint8_t iMasterAddress)
-{
-    #if IS_AVR()
-    AVR_SET_PRESCALER();
 
     /* Set I2C SCL clock rate */
     TWBR = (uint8_t) ((CPU_FREQ/iSCL_Clock)-16)/(2*I2C_PRESCALER);
@@ -54,12 +43,12 @@ void I2C_MasterInit(uint32_t iSCL_Clock, uint8_t iMasterAddress)
 
     /* Enable TWI module */
     SET_BIT(TWCR, TWCR_TWEN);
-    #endif //IS_AVR()
+    #endif
 }
 
 void I2C_SlaveInit(uint8_t iSlaveAddress)
 {
-    #if IS_AVR()
+    #if MCU_TYPE == _AVR
     /* Set Master Address */
     TWAR = iSlaveAddress<<1;
     CLR_BIT(TWAR, 0);
@@ -69,14 +58,14 @@ void I2C_SlaveInit(uint8_t iSlaveAddress)
 
     /* Enable TWI module */
     SET_BIT(TWCR, TWCR_TWEN);
-    #endif //IS_AVR()
+    #endif
 }
 
 i2c_error_t I2C_SendStartCondition(void)
 {
     i2c_error_t kErrorState = I2C_NoError;
 
-    #if IS_AVR()
+    #if MCU_TYPE == _AVR
     /* Send Start Condition */
     SET_BIT(TWCR, TWCR_TWSTA);
 
@@ -94,7 +83,7 @@ i2c_error_t I2C_SendStartCondition(void)
     {
         /* Do Nothing */
     }
-    #endif //IS_AVR()
+    #endif
     return kErrorState;
 }
 
@@ -102,7 +91,7 @@ i2c_error_t I2C_SendRepeatedStartCondition(void)
 {
     i2c_error_t kErrorState = I2C_NoError;
 
-    #if IS_AVR()
+    #if MCU_TYPE == _AVR
     /* Send Repeated Start Condition */
     SET_BIT(TWCR, TWCR_TWSTA);
 
@@ -123,7 +112,7 @@ i2c_error_t I2C_SendRepeatedStartCondition(void)
     {
         /* Do Nothing */
     }
-    #endif //IS_AVR()
+    #endif
     return kErrorState;
 }
 
@@ -131,7 +120,7 @@ i2c_error_t I2C_SendSlaveAddressWithRead(uint8_t iSlaveAddress)
 {
     i2c_error_t kErrorState = I2C_NoError;
 
-    #if IS_AVR()
+    #if MCU_TYPE == _AVR
     /* Send  Slave address*/
     TWDR = iSlaveAddress<<1;
 
@@ -155,7 +144,7 @@ i2c_error_t I2C_SendSlaveAddressWithRead(uint8_t iSlaveAddress)
     {
         /* Do Nothing */
     }
-    #endif //IS_AVR()
+    #endif
     return kErrorState;
 }
 
@@ -163,7 +152,7 @@ i2c_error_t I2C_SendSlaveAddressWithWrite(uint8_t iSlaveAddress)
 {
     i2c_error_t kErrorState = I2C_NoError;
 
-    #if IS_AVR()
+    #if MCU_TYPE == _AVR
     /* Send  Slave address*/
     TWDR = iSlaveAddress<<1;
 
@@ -183,7 +172,7 @@ i2c_error_t I2C_SendSlaveAddressWithWrite(uint8_t iSlaveAddress)
     {
         /* Do Nothing */
     }
-    #endif //IS_AVR()
+    #endif
     return kErrorState;
 }
 
@@ -191,7 +180,7 @@ i2c_error_t I2C_MasterWriteByte(uint8_t iDataByte)
 {
     i2c_error_t kErrorState = I2C_NoError;
 
-    #if IS_AVR()
+    #if MCU_TYPE == _AVR
     /* Write Data byte in the buffer*/
     TWDR = iDataByte;
 
@@ -210,7 +199,7 @@ i2c_error_t I2C_MasterWriteByte(uint8_t iDataByte)
     {
         /* Do Nothing */
     }
-    #endif //IS_AVR()
+    #endif
     return kErrorState;
 }
 
@@ -218,7 +207,7 @@ i2c_error_t I2C_MasterReadByte(uint8_t *pDataByte)
 {
     i2c_error_t kErrorState = I2C_NoError;
 
-    #if IS_AVR()
+    #if MCU_TYPE == _AVR
     /* Clear TWI Interrupt Flag*/
     SET_BIT(TWCR, TWCR_TWINT);
 
@@ -234,7 +223,7 @@ i2c_error_t I2C_MasterReadByte(uint8_t *pDataByte)
         /* Read Data byte */
         *pDataByte = TWDR;
     }
-    #endif //IS_AVR()
+    #endif
     return kErrorState;
 }
 
@@ -242,7 +231,7 @@ i2c_error_t I2C_SlaveWriteByte(uint8_t iDataByte)
 {
     i2c_error_t kErrorState = I2C_NoError;
 
-    #if IS_AVR()
+    #if MCU_TYPE == _AVR
     /* Clear TWI Interrupt Flag*/
     SET_BIT(TWCR, TWCR_TWINT);
     /* Wait until the SLA+W has been transmitted from master */
@@ -272,7 +261,7 @@ i2c_error_t I2C_SlaveWriteByte(uint8_t iDataByte)
     {
         /* Do Nothing */
     }
-    #endif //IS_AVR()
+    #endif
     return kErrorState;
 }
 
@@ -280,7 +269,7 @@ i2c_error_t I2C_SlaveReadByte(uint8_t *pDataByte)
 {
     i2c_error_t kErrorState = I2C_NoError;
 
-    #if IS_AVR()
+    #if MCU_TYPE == _AVR
     /* Clear TWI Interrupt Flag*/
     SET_BIT(TWCR, TWCR_TWINT);
     /* Wait until the SLA+W has been transmitted from master */
@@ -309,7 +298,7 @@ i2c_error_t I2C_SlaveReadByte(uint8_t *pDataByte)
         *pDataByte = TWDR;
     }
 
-    #endif //IS_AVR()
+    #endif
 
     return kErrorState;
 }
@@ -318,7 +307,7 @@ i2c_error_t I2C_SendStopCondition(void)
 {
     i2c_error_t kErrorState = I2C_NoError;
 
-    #if IS_AVR()
+    #if MCU_TYPE == _AVR
 
     /* Send Stop Condition */
     SET_BIT(TWCR, TWCR_TWSTO);
@@ -326,7 +315,7 @@ i2c_error_t I2C_SendStopCondition(void)
     /* Clear TWI Interrupt Flag*/
     SET_BIT(TWCR, TWCR_TWINT);
 
-    #endif //IS_AVR()
+    #endif
 
     return kErrorState;
 }
