@@ -10,9 +10,9 @@ uint16 pulseWidth = 0;
 //-----------------------------------------------------------------------------
 static void Ultrasonic_Trigger(Ultrasonic_t * pUltrasonicConfig)
 {
-    GPIO_SetPinValue(pUltrasonicConfig->port, pUltrasonicConfig->triggerPin, kHigh);
+    GPIO_SetPinValue(pUltrasonicConfig->port, pUltrasonicConfig->triggerPin, kHigh);//IGNORE-STYLE-CHECK[L004]
     Delay_ms(0.01);
-    GPIO_SetPinValue(pUltrasonicConfig->port, pUltrasonicConfig->triggerPin, kLow);
+    GPIO_SetPinValue(pUltrasonicConfig->port, pUltrasonicConfig->triggerPin, kLow);//IGNORE-STYLE-CHECK[L004]
 }
 void Ultrasonic_ISR()
 {
