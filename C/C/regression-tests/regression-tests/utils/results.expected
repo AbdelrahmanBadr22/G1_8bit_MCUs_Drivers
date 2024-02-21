@@ -1,0 +1,4 @@
+After 'SET_BIT' var = 255
+After 'CLR_BIT' var = 240
+After 'TOG_BIT' var = 15
+SystemClock::Endless stopped

@@ -1,0 +1,72 @@
+name: RUNNING CI [BUILD AND TEST] 
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  style-checking:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup vera 
+      run: sh /home/runner/work/G1_8bit_MCUs_Drivers/G1_8bit_MCUs_Drivers/.github/workflows/setupVera.sh
+    - name: Style-Checking
+      run: make style-check -C C
+    - name: Clean
+      run: sudo apt remove vera++
+
+  avr-build:
+    runs-on: ubuntu-latest
+    needs: [style-checking]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Configure Building C Version For Target AVR
+      run: sh /home/runner/work/G1_8bit_MCUs_Drivers/G1_8bit_MCUs_Drivers/.github/workflows/configure.sh
+    - name: Building C Version For Target AVR
+      run: make build-avr -C C
+    - name: Upload objects artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: objects-artifact
+        path: /home/runner/work/G1_8bit_MCUs_Drivers/G1_8bit_MCUs_Drivers/C/.build/avr
+    - name: Clean
+      run: sh /home/runner/work/G1_8bit_MCUs_Drivers/G1_8bit_MCUs_Drivers/.github/workflows/clean.sh 
+
+  pic-build:
+    runs-on: ubuntu-latest
+    needs: [style-checking]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Configure Building C Version For Target PIC
+      run: sh /home/runner/work/G1_8bit_MCUs_Drivers/G1_8bit_MCUs_Drivers/.github/workflows/configure-build-pic.sh
+    - name: Building C Version For Target PIC
+      run: make build-pic -C C
+    - name: Upload objects artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: objects-artifact
+        path: /home/runner/work/G1_8bit_MCUs_Drivers/G1_8bit_MCUs_Drivers/C/.build/pic
+    - name: Clean
+      run: sh /home/runner/work/G1_8bit_MCUs_Drivers/G1_8bit_MCUs_Drivers/.github/workflows/clean.sh 
+
+  regression-test:
+    runs-on: ubuntu-latest
+    needs: [avr-build]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Configure Test Build
+      run: sh /home/runner/work/G1_8bit_MCUs_Drivers/G1_8bit_MCUs_Drivers/.github/workflows/configure.sh
+    - name: Download objects artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: objects-artifact
+        path: /home/runner/work/G1_8bit_MCUs_Drivers/G1_8bit_MCUs_Drivers/C/.build/avr
+    - name: Configure Tests
+      run: sh /home/runner/work/G1_8bit_MCUs_Drivers/G1_8bit_MCUs_Drivers/.github/workflows/configure-test.sh
+    - name: Testing For C Version
+      run: make run-regressions filter=all -C C 
+    - name: Clean
+      run: sh /home/runner/work/G1_8bit_MCUs_Drivers/G1_8bit_MCUs_Drivers/.github/workflows/clean-test.sh 

@@ -1,0 +1,26 @@
+Char Stack:
+sizeof stack member:1
+size: 0
+top: 0
+size: 3
+top-val: c
+size: 2
+top-val: b
+size: 1
+top-val: a
+size: 0
+size: 1
+top-val: m
+
+INT Stack:
+sizeof stack member:4
+Stack members
+size: 0
+top: 0
+size: 3
+top-val: 230
+size: 2
+top-val: 200
+size: 1
+top-val: 100
+size: 0SystemClock::Endless stopped

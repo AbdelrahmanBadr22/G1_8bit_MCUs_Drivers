@@ -1,5 +1,5 @@
-#include "../../common/Types.h"
-#include "../../mcal/GPIO/GPIO.h"
+#include "Types.h"
+#include "GPIO.h"
 #include "Relay.h"
 
 error_t Relay_Init(Relay_t* pRelay)

@@ -302,7 +302,6 @@ error_t EXTI_SetSenseControl (uint8_t kInterruptSource,  uint8_t kSenseControl)
 error_t EXTI_SetCallBackFun  (uint8_t kInterruptSource,  void (*pFun)(void))
 {
     error_t kErrorState = kNoError;
-    #if IS_AVR()
         if (pFun != NULL_PTR)
         {
             switch (kInterruptSource)
@@ -318,25 +317,6 @@ error_t EXTI_SetCallBackFun  (uint8_t kInterruptSource,  void (*pFun)(void))
         {
             kErrorState = kFunctionParameterError;
         }
-    #elif IS_PIC()
-        if (pFun != NULL_PTR)
-        {
-            switch (kInterruptSource)
-            {
-                case EXTI_INT0 : ISR_Init(EXTI_INT0, pFun); break;
-                case EXTI_INT1 : ISR_Init(EXTI_INT1, pFun); break;
-                case EXTI_INT2 : ISR_Init(EXTI_INT2, pFun); break;
-
-                default: kErrorState = kFunctionParameterError;
-            }
-        }
-        else
-        {
-            kErrorState = kFunctionParameterError;
-        }
-    #else
-    #error "Unkown MCU"
-    #endif
     return kErrorState;
 }
 #if IS_PIC()

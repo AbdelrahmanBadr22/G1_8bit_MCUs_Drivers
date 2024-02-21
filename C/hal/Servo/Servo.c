@@ -7,9 +7,9 @@
  *
  */
 
-#include "../../common/Types.h"
-#include "../../mcal/GPIO/GPIO.h"
-#include "../../mcal/TIMER/TIMER_Interface.h"
+#include "Types.h"
+#include "GPIO.h"
+#include "TIMER_Interface.h"
 #include "Servo.h"
 
 error_t Servo_Init(uint8_t kChannel)
