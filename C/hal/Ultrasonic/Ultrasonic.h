@@ -9,5 +9,5 @@ typedef struct
 }Ultrasonic_t;
 
 error_t Ultrasonic_Init(Ultrasonic_t * pUSConfig);
-error_t Ultrasonic_GetDistance(Ultrasonic_t * pUSConfig, uint16 *distance);
+float Ultrasonic_GetDistance(Ultrasonic_t * pUSConfig);
 #endif //ULTRASONIC_H_
