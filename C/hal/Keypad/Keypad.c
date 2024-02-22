@@ -23,7 +23,7 @@ error_t Keypad_Initiate(keypad_t * pKeypad)
         for (i = 0; i < Keypad_numberOfRows; i++)
         {
             GPIO_SetPinDirection(pKeypad->Keypad_RowArr[i].port,
-                              pKeypad->Keypad_RowArr[i].pin);
+                              pKeypad->Keypad_RowArr[i].pin, kInput);
         }
         #endif
         /*--------Set Columns Pin as Output Pin---------*/
