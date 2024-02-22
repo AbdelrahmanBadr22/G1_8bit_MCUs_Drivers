@@ -1,10 +1,10 @@
-#include "../../common/Config.h"
-#include "../../common/Types.h"
-#include "../../mcal/GPIO/GPIO.h"
+#include "Config.h"
+#include "Types.h"
+#include "GPIO.h"
 #include "Keypad_config_only_one.h"
 #include "Keypad_only_one.h"
 
-#if MCU_TYPE==_AVR
+#if IS_AVR()
 #include <util/delay.h>
 #endif
 
@@ -22,7 +22,7 @@ error_t Keypad_Init(keypad_t * pKeypad)
     {
         uint8_t i;
         /*--------Set Rows Pin as Pullup Pin-------------*/
-         #if MCU_TYPE == _AVR
+         #if IS_AVR()
         for (i = 0; i < Keypad_numberOfRows; i++)
         {
             GPIO_SetPinDirection(pKeypad->Keypad_RowArr[i].port,
@@ -34,7 +34,7 @@ error_t Keypad_Init(keypad_t * pKeypad)
                              kHigh);
 
         }
-        #elif MCU_TYPE == _PIC
+        #elif IS_PIC()
         for (i = 0; i < Keypad_numberOfRows; i++)
         {
             GPIO_SetPinDirection(pKeypad->Keypad_RowArr[i].port,

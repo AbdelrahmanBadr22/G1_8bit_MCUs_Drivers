@@ -1,5 +1,5 @@
-#include "../../common/Types.h"
-#include "../../mcal/GPIO/GPIO.h"
+#include "Types.h"
+#include "GPIO.h"
 #include "DC_Motor.h"
 
 
