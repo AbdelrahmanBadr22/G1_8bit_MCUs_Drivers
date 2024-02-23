@@ -53,6 +53,7 @@ void WDT_Disable(void)
 static error_t helper_SetTimeOut(WDT_TimeOut timeOut)
 {
     error_t kErrorState = kNoError;
+    #if IS_AVR()
     switch (timeOut)
     {
         case WDT_16ms3:
@@ -105,5 +106,6 @@ static error_t helper_SetTimeOut(WDT_TimeOut timeOut)
 
         default: kErrorState = kFunctionParameterError;
     }
+    #endif
     return kErrorState;
 }
