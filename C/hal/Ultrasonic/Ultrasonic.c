@@ -6,20 +6,15 @@
 #include "Ultrasonic.h"
 #include "Delay.h"
 #include "GIC_Interface.h"
-#if IS_AVR()
-#include <util/delay.h>
-#endif
 static uint16 t1 =0, t2=0;
-static uint8_t flag = 0, Capflag=0;
+volatile uint8_t flag = 0, Capflag=0;
 //-----------------------------------------------------------------------------
 //                           HELPER FUNCTIONS
 //-----------------------------------------------------------------------------
 static void Ultrasonic_Trigger(Ultrasonic_t * pUltrasonicConfig)
 {
     GPIO_SetPinValue(pUltrasonicConfig->port, pUltrasonicConfig->triggerPin, kHigh);//IGNORE-STYLE-CHECK[L004]
-    #if IS_AVR()
-    _delay_us(10);
-    #endif
+    Delay_ms(10);
     GPIO_SetPinValue(pUltrasonicConfig->port, pUltrasonicConfig->triggerPin, kLow);//IGNORE-STYLE-CHECK[L004]
 }
 void Ultrasonic_ISR()
@@ -65,6 +60,7 @@ float  Ultrasonic_GetDistance(Ultrasonic_t * pUSConfig)
     ICU_Init(ICU_PRESCALER_1);
     Ultrasonic_Trigger(pUSConfig);
     float distance = 0;
+    Delay_ms(10);
     if (Capflag==1)
     {
     uint16 ticks=t2-t1;
