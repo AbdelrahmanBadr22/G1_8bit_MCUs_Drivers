@@ -1,52 +1,52 @@
 #ifndef SPI_CONF_H
 #define SPI_CONF_H
 
-#define SPI_TIMEOUT             (1000)
+#define SPI_TIMEOUT (1000)
 /**
- * options:         1-MSB_FIRST
- *                  2-LSB_FIRST
+* options: 1-MSB_FIRST
+* 2-LSB_FIRST
 */
-#define SPI_DATA_ORDER         (MSB_FIRST)
+#define SPI_DATA_ORDER (MSB_FIRST)
 
 /**
- * options:         1-IDLE_LOW
- *                  2-IDLE_HIGH
+* options: 1-IDLE_LOW
+* 2-IDLE_HIGH
 */
-#define SPI_CLK_POLARITY         (IDLE_LOW)
+#define SPI_CLK_POLARITY (IDLE_LOW)
 /**
- * options:         1-SAMPLE_FIRST
- *                  2-SETUP_FIRST
+* options: 1-SAMPLE_FIRST
+* 2-SETUP_FIRST
 */
-#define SPI_CLK_PHASE         (SAMPLE_FIRST)
+#define SPI_CLK_PHASE (SAMPLE_FIRST)
 /**
- * options:         1-INTERRUPT_ENABLE
- *                  2-INTERRUPT_DISABLE
+* options: 1-INTERRUPT_ENABLE
+* 2-INTERRUPT_DISABLE
 */
-#define SPI_INTERRUPT         (INTERRUPT_DISABLE)
+#define SPI_INTERRUPT (INTERRUPT_DISABLE)
 /**
- * options:         1-CLK_4
- *                  2-CLK_16
- *                  3-CLK_64
- *                  4-TMR2_output_2
+* options: 1-CLK_4
+* 2-CLK_16
+* 3-CLK_64
+* 4-TMR2_output_2
 */
-#define SPI_CLK_MODE            (CLK_4)
+#define SPI_CLK_MODE (CLK_4)
 /**
- * options:         1-ENABLE
- *                  2-DISABLE
+* options: 1-ENABLE
+* 2-DISABLE
 */
-#define SPI_SS_MODE             (ENABLE)
+#define SPI_SS_MODE (ENABLE)
 /**
- * options:         1-MODE_1
- *                  2-MODE_2
- *                  3-MODE_3
- *                  4-MODE_4
+* options: 1-MODE_1
+* 2-MODE_2
+* 3-MODE_3
+* 4-MODE_4
 */
-#define SPI_MODE                (MODE_1)
+#define SPI_MODE (MODE_1)
 /**
- * options:         1-END
- *                  2-MIDDLE
+* options: 1-END
+* 2-MIDDLE
 */
-#define SPI_SAMPLE_MODE             (MIDDLE)
+#define SPI_SAMPLE_MODE (MIDDLE)
 
 #if SPI_DATA_ORDER != MSB_FIRST
 #if SPI_DATA_ORDER != LSB_FIRST
