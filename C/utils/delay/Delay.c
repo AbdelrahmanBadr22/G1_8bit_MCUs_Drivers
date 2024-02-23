@@ -1,7 +1,7 @@
-#include "../../common/Config.h"
-#include "../../common/Types.h"
+#include "Config.h"
+#include "Types.h"
 #include "Delay.h"
-#include "../../mcal/TIMER/TIMER_Interface.h"
+#include "TIMER_Interface.h"
 
 // Include built-in library only if needed
 #if DELAY_METHOD == DELAY_BUILTIN
