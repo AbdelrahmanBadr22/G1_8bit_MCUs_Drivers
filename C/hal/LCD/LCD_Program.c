@@ -1,8 +1,8 @@
 #include "Config.h"
 #include "Delay.h"
 
-#include "../../common/Types.h"
-#include "../../mcal/GPIO/GPIO.h"
+#include "Types.h"
+#include "GPIO.h"
 #include "LCD_Interface.h"
 #include "LCD_Private.h"
 
