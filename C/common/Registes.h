@@ -141,6 +141,7 @@
     #define SSPSTAT_REG *((volatile uint8_t *)0xFC7)
     #define SSPCON1_REG *((volatile uint8_t *)0xFC6)
     #define SSPBUF_REG  *((volatile uint8_t *)0xFC9)
+    #define OSCCON_REG  *((volatile uint8_t *)0xFD3)
 #endif  // MCU_TYPE
 
 #endif //_REGISTERS_H_
