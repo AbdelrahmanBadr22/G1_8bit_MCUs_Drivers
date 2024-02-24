@@ -10,7 +10,7 @@
 // see: https://stackoverflow.com/questions/30422367/how-to-fix-error-message-builtin-avr-delay-cycles-expects-a-compile-time-inte      //IGNORE-STYLE-CHECK[L004]
 #define __DELAY_BACKWARD_COMPATIBLE__
 #include <util/delay.h>
-#define BUILTIN_DELAY_MS(ms_)       Delay_ms(ms_);
+#define BUILTIN_DELAY_MS(ms_)       _delay_ms(ms_);
 #define DEC_INST                    "1: sbiw %0,1"
 #define RETURN_BACK_INST            "brne 1b"
 #elif IS_PIC()
