@@ -1,5 +1,5 @@
-#include "../../common/Types.h"
-#include "../../mcal/GPIO/GPIO.h"
+#include "Types.h"
+#include "GPIO.h"
 #include "PIR.h"
 
 error_t PIR_Init(PIR_t* pPIR)

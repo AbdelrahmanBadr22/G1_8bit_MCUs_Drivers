@@ -5,7 +5,6 @@
     Options:
             ADC_AVCC  --> internal Voltage reference
                 (connect AVCC pin to the Vcc same as the controller)
-
             ADC_AREF  --> External Voltage reference
                 (connect ADC_AREF pin to the Vcc[0 , 5v])
                 

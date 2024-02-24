@@ -1,5 +1,5 @@
-#include "../../common/Types.h"
-#include "../../mcal/GPIO/GPIO.h"
+#include "Types.h"
+#include "GPIO.h"
 #include "PushButton.h"
 
 void PushButton_Init(PushButton_t* pPB)

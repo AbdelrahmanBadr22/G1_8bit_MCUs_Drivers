@@ -84,6 +84,8 @@
     #define TWSR       *((volatile uint8_t *)0x21) /* TWI Status Register */
     #define TWBR       *((volatile uint8_t *)0x20) /* TWI Bit Rate Register */
 
+    #define WDTCR	   *((volatile uint8_t*) 0x41)
+
 #elif MCU_TYPE == _PIC
     #define ADRESH_REG   *((volatile uint8_t *)0xFC4)
     #define ADRESL_REG   *((volatile uint8_t *)0xFC3)
@@ -139,6 +141,7 @@
     #define SSPSTAT_REG *((volatile uint8_t *)0xFC7)
     #define SSPCON1_REG *((volatile uint8_t *)0xFC6)
     #define SSPBUF_REG  *((volatile uint8_t *)0xFC9)
+    #define OSCCON_REG  *((volatile uint8_t *)0xFD3)
 #endif  // MCU_TYPE
 
 #endif //_REGISTERS_H_

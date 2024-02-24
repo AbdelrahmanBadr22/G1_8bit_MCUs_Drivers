@@ -37,11 +37,7 @@
 #define ADCON0_CHS3     (5)
 
 #define ADC_PRE_MASK (0b1111000)
-#if IS_AVR()
 #define ADC_CH_MASK (0b1110000)
-#elif IS_PIC()
-#define ADC_CH_MASK (0b11000011)
-#endif
 
 #define ADC_PRESCALER_2    (1)
 #define ADC_PRESCALER_4    (2)
@@ -57,24 +53,9 @@
 
 #if IS_AVR()
 #define ADC_PRESCALER_REG   (ADCSRA_REG)
-#define ADC_CHANNEL_REG     (ADMUX_REG)
-#define ADC_DATA_L_REG      (ADCL_REG)
-#define ADC_DATA_H_REG      (ADCH_REG)
 #elif IS_PIC()
 #define ADC_PRESCALER_REG   (ADCON2_REG)
-#define ADC_CHANNEL_REG     (ADCON0_REG)
-#define ADC_DATA_L_REG      (ADRESL_REG)
-#define ADC_DATA_H_REG      (ADRESH_REG)
 #endif //IS_AVR()
-#if IS_AVR()
-#define ADC_START_CONVERSION()  (SET_BIT(ADCSRA_REG, ADCSRA_ADSC))
-#define ADC_CHECK_FLAG()        ((GET_BIT(ADCSRA_REG, ADCSRA_ADIF)==0))
-# define ADC_Clear_Interrupt_Flag() (SET_BIT(ADCSRA_REG, ADCSRA_ADIF))
-#elif IS_PIC()
-#define ADC_START_CONVERSION()  (SET_BIT(ADCON0_REG, ADCON0_GODONE))
-#define ADC_CHECK_FLAG()  ((GET_BIT(ADCON0_REG, ADCON0_GODONE) == 1)&&(GET_BIT(PIR1_REG, PIR1_ADIF) == 0)) //IGNORE-STYLE-CHECK[L004]
-#define ADC_Clear_Interrupt_Flag() ( CLR_BIT(PIR1_REG, PIR1_ADIF))
-#endif
 typedef enum
 {
     ADC_CHANNEL0,

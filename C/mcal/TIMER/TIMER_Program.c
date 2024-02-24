@@ -424,7 +424,7 @@ error_t TIMER1_SetPWM_Channel_Mode(uint8_t kChannel, uint8_t kMode)
     {
         GPIO_SetPinDirection(kPORTD, kPIN5, kOutput);
         kErrorState = AVR_TIMER1_SET_PWM_CHANNEL_MODE_PWM1_OC1A(kErrorState, kMode); //IGNORE-STYLE-CHECK[L004]
-        
+
     }else if ( kChannel == PWM1_OC1B)
     {
         GPIO_SetPinDirection(kPORTD, kPIN4, kOutput);
