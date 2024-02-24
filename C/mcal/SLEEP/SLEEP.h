@@ -27,5 +27,7 @@
 #define OSCCON_SCS1         (1)
 #define OSCCON_SCS0         (0)
 #endif // MCU TYPE
+
 error_t SLEEP(uint8_t mode);
+
 #endif //SLEEP_H
